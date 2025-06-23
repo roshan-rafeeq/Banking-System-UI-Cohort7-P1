@@ -2,6 +2,7 @@
 
 This repository contains the front-end modules for a web-based **Banking System** developed using **ReactJS + Bootstrap**, following a **modular microservices-based backend** using **Spring Boot + MongoDB**.
 
+- **Each team works inside `src/modules/{module-name}` independently.**
 ---
 
 ## 📁 Module Structure
@@ -22,14 +23,24 @@ team6-user-access/
 
 | Team | Module | UI Developer |
 |------|--------|--------------|
-| 1 | Customer Onboarding | `name` |
-| 2 | Account Management | `name` |
-| 3 | Transaction | `name` |
+| 1 | Customer Onboarding | `Jobin` |
+| 2 | Account Management | `Sri Hari` |
+| 3 | Transaction | `Shibin` |
 | 4 | Loan Management | `Roshan` |
-| 5 | Complaint System | `name` |
-| 6 | User Access Management | `name` |
+| 5 | Complaint System | `Ajay` |
+| 6 | User Access Management | `Akshaya` |
 
 ---
+
+## 👩‍💻 How Each Team Works
+
+### ✅ Setup:
+```bash
+git clone https://github.com/your-org/banking-system-ui.git
+cd banking-system-ui
+npm install
+npm run dev
+```
 
 ## 🚀 Tech Stack
 
@@ -62,4 +73,3 @@ Avoid direct commits to main
 Use .env for all API configs
 
 Do not commit node_modules or .env
-

@@ -1,7 +1,7 @@
-```
+
 # 🧑‍💻 Contribution Guidelines
 
-Welcome, collaborators! Please follow the rules to ensure smooth development and integration.
+**Welcome, collaborators! Please follow the rules to ensure smooth development and integration.**
 
 ---
 
@@ -17,7 +17,7 @@ Welcome, collaborators! Please follow the rules to ensure smooth development and
 - `refactor:` for code cleanup
 - `docs:` for README or documentation
 
-Examples:
+**Examples**:
 feat: add loan application form
 fix: corrected API endpoint for loan delete
 
