@@ -1,0 +1,107 @@
+/* src/pages/TransactionPageCss.css */
+
+/* Container */
+.parent-container{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    
+    }
+.heading-form{
+    display: flex;
+    flex-direction: column;
+}
+.transfer-container {
+  /* max-width: 600px;*/
+  
+  padding: 30px;
+  background-color: #c6c7c8;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(11, 115, 125, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 100px;
+  display: flex;
+  flex-direction: row
+  
+    
+}
+
+/* Title */
+.transfer-title {
+  text-align: center;
+  font-size: 28px;
+  color: #0B737D;
+  margin-bottom: 25px;
+}
+
+/* Form */
+.transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-field {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #15A3EF;
+  outline: none;
+}
+
+/* Button */
+.transfer-button {
+  background-color: #15A3EF;
+  color: #fff;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.transfer-button:hover {
+  background-color: #0B737D;
+}
+
+/* Transaction History */
+.transaction-history {
+  margin-top: 0px;
+  width: 100%;
+  height: 100%;
+  margin-left: 100px;
+}
+
+.history-title {
+  font-size: 22px;
+  color: #625231;
+  margin-bottom: 15px;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+}
+
+.history-item {
+  background-color: #f6f5ef;
+  border-left: 5px solid #655514;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #333;
+}
+
+.history-item p {
+  margin: 4px 0;
+}
