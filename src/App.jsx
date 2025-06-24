@@ -7,8 +7,9 @@ import ComplaintStatus from './modules/team5-complaint-management/ComplaintStatu
 import AccountRoutes from './routes/AccountRoutes';
 import NavBar from './components/Navbar';
 import ComplaintRoutes from './routes/ComplaintRoutes';
-
 import AccountsDashboard from './modules/team2-account-management/pages/AccountsDashboard';
+import Login from './modules/team1-customer-onboarding/Login';
+import SignUp from './modules/team1-customer-onboarding/SignUp';
 
 const App = () => {
   return (
@@ -16,6 +17,8 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<SignUp />} />
         <Route path="/complaint/*" element={<ComplaintRoutes />} />
         <Route path="/accounts/*" element={<AccountRoutes />} />
         <Route path="/loan/*" element={<LoanRoutes />} />

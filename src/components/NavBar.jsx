@@ -34,8 +34,8 @@ function NavBar() {
             <Nav.Link href="/debit-cards">Debit Cards</Nav.Link>
           </Nav>
            <div className="d-flex gap-2">
-            <Button variant="outline-light" href="#login">Login</Button>
-            <Button variant="light" href="#register">Register</Button>
+            <Button variant="outline-light" href="/login">Login</Button>
+            <Button variant="light" href="/register">Register</Button>
           </div>
         </Navbar.Collapse>
       </Container>
