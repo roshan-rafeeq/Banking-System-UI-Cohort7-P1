@@ -9,7 +9,7 @@ function NavBar() {
   return (
     <Navbar expand="lg" className=" navbar-dark py-3 px-4">
       <Container fluid>
-          <Navbar.Brand href="#" className="d-flex align-items-center gap-2">
+          <Navbar.Brand href="/" className="d-flex align-items-center gap-2">
           <img
             src="/logo.png"  
             alt="Bank Logo"
@@ -17,7 +17,7 @@ function NavBar() {
             height="30"
             className="d-inline-block align-top"
           />
-          Bank Demo
+          Demo Bank
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
