@@ -3,14 +3,20 @@ import { Link, useNavigate } from 'react-router-dom'
 import Alert from './Alert'
 
 const Login = () => {
-    const [credentials, setCredentials] = useState({ username: "", password: "" })
+    const [credentials, setCredentials] = useState({ customerPhone: "", password: "" })
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
     const onchange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     }
-    const submit = (e) => {
+    const submit =async (e) => {
         e.preventDefault();
+        const response = await fetch("https://b96b-103-141-55-30.ngrok-free.app/api/customer/authenticate",
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ customerPhone: credentials.customerPhone, password: credentials.password })
+        });
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
@@ -47,9 +53,9 @@ const Login = () => {
                                     <input
                                         type="text"
                                         className="form-control form-control-lg"
-                                        id="username"
-                                        name="username"
-                                        placeholder="User Name"
+                                        id="customerPhone"
+                                        name="customerPhone"
+                                        placeholder="Phone Number"
                                         onChange={onchange}
                                         style={{ borderRadius: "10px" }}
                                     />

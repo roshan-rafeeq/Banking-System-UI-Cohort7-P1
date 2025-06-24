@@ -8,9 +8,22 @@ import signupImage from '/images/signup_image.png'
 const SignUp = () => {
     const [gender, setGender] = useState('')
     const [credentials, setCredentials] = useState({
-        fullname: "", username: "", password: "", nationality: "", address: "",
-        phone: "", dob: "", gmail: "", income: "", pancard: "", aadhar: ""
-    })
+        customerId: "",
+        customerName: "",
+        customerDOB: "",
+        customerGender: "",
+        customerEmail: "",
+        customerPhone: "",
+        city: "",
+        state: "",
+        country: "",
+        pincode: "",
+        nationality: "",
+        customerIncome: "",
+        customerPanNumber: "",
+        customerAadharNumber: ""
+    }
+    );
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
 
@@ -20,8 +33,49 @@ const SignUp = () => {
     const handleGenderChange = (e) => {
         setGender(e.target.value)
     }
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
+        const {
+            customerId,
+            customerName,
+            customerDOB,
+            customerGender,
+            customerEmail,
+            customerPhone,
+            city,
+            state,
+            country,
+            pincode,
+            nationality,
+            customerIncome,
+            customerPanNumber,
+            password,
+            customerAadharNumber } = credentials
+        const response = await fetch("https://b96b-103-141-55-30.ngrok-free.app/api/customer/signUp",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    customerId,
+                    customerName,
+                    customerDOB,
+                    customerGender,
+                    customerEmail,
+                    customerPhone,
+                    CustomerAddress :{ 
+                        city,
+                        state,
+                        country,
+                        pincode
+                    },
+                    nationality,
+                    customerIncome,
+                    customerPanNumber,
+                    password,
+                    customerAadharNumber
+                })
+            }
+        )
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
@@ -60,27 +114,77 @@ const SignUp = () => {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="fullname" name="fullname" placeholder="Full Name" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerName" name="customerName" placeholder="Full Name" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
+                                    </div>
+                                    <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="address" name="address" placeholder="Address" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="number" className="form-control form-control-lg" id="customerPhone" name="customerPhone" placeholder="Phone Number" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
+                                    </div>
+                                    <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="number" className="form-control form-control-lg" id="phone" name="phone" placeholder="Phone Number" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="city" name="city" placeholder="City" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="text" className="form-control form-control-lg" id="state" name="state" placeholder="State" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="text" className="form-control form-control-lg" id="country" name="country" placeholder="Country" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="text" className="form-control form-control-lg" id="pincode" name="pincode" placeholder="Pincode" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="email" className="form-control form-control-lg" id="customerEmail" name="customerEmail" placeholder="Gmail" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="password" className="form-control form-control-lg" id="password" name="password" placeholder="Password" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="text" className="form-control form-control-lg" id="customerIncome" name="customerIncome" placeholder="Income" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
                                         <div className="mb-3">
                                             <input type="text" className="form-control form-control-lg" id="nationality" name="nationality" placeholder="Nationality" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
+                                    </div>
+                                    <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="date" className="form-control form-control-lg" id="dob" name="dob" placeholder="Date of Birth" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="date" className="form-control form-control-lg" id="customerDOB" name="customerDOB" placeholder="Date of Birth" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
-                                        {/* Gender */}
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="text" className="form-control form-control-lg" id="customerPanNumber" name="customerPanNumber" placeholder="Pan Card" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className="mb-3">
+                                            <input type="text" className="form-control form-control-lg" id="customerAadharNumber" name="customerAadharNumber" placeholder="Aadhar Number" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                        </div>
+                                    </div>
+                                    {/* Gender - full width */}
+                                    <div className="col-12">
                                         <div className='mb-3 d-flex gap-4 align-items-center'>
                                             <div className="form-check">
                                                 <input
                                                     className="form-check-input"
                                                     type="radio"
-                                                    name="gender"
+                                                    name="customerGender"
                                                     id="male"
                                                     value="Male"
                                                     checked={gender === "Male"}
@@ -94,7 +198,7 @@ const SignUp = () => {
                                                 <input
                                                     className="form-check-input"
                                                     type="radio"
-                                                    name="gender"
+                                                    name="customerGender"
                                                     id="female"
                                                     value="Female"
                                                     checked={gender === "Female"}
@@ -104,26 +208,6 @@ const SignUp = () => {
                                                     Female
                                                 </label>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="username" name="username" placeholder="User Name" onChange={onchange} style={{ borderRadius: "10px" }} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="password" className="form-control form-control-lg" id="password" name="password" placeholder="Password" onChange={onchange} style={{ borderRadius: "10px" }} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="email" className="form-control form-control-lg" id="gmail" name="gmail" placeholder="Gmail" onChange={onchange} style={{ borderRadius: "10px" }} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="income" name="income" placeholder="Income" onChange={onchange} style={{ borderRadius: "10px" }} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="pancard" name="pancard" placeholder="Pan Card" onChange={onchange} style={{ borderRadius: "10px" }} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="aadhar" name="aadhar" placeholder="Aadhar Number" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                 </div>
