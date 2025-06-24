@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import Debit from '../modules/team6-debitt-card-management/pages/Debit';
-import Blockcard from '../modules/team6-debitt-card-management/pages/Blockcard';
-import ManageLimits from '../modules/team6-debitt-card-management/pages/ManageLimits';
-import SetResetPin from '../modules/team6-debitt-card-management/pages/SetResetPin';
-import ActivateCard from '../modules/team6-debitt-card-management/pages/ActivateCard';
+import Debit from '../modules/team6-user-access-management/pages/Debit';
+import Blockcard from '../modules/team6-user-access-management/pages/Blockcard';
+import ManageLimits from '../modules/team6-user-access-management/pages/ManageLimits';
+import SetResetPin from '../modules/team6-user-access-management/pages/SetResetPin';
+import ActivateCard from '../modules/team6-user-access-management/pages/ActivateCard';
 
 function AppRoutes() {
   return (
