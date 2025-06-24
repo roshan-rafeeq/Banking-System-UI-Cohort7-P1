@@ -11,12 +11,17 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/complaint" element={<ComplaintPage />} />
         <Route path="/complaint/query" element={<ComplaintStatus />} />
-        <Route path = "/accounts/" element={<AccountsDashboard/>} />
-        {/* Placeholder for Accounts Dashboard, replace with actual component */}
 
+        
+        <Route path = "/accounts/" element={<AccountsDashboard/>} />
+        
+        
         <Route path="/loan/*" element={<LoanRoutes />} />
+
+        <Route path="*" element={<h2 className="text-center mt-5 ">404 - Page Not Found</h2>} />
       </Routes>
     </Router>
   );
