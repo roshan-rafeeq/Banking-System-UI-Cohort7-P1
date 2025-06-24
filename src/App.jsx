@@ -4,15 +4,17 @@ import Home from './pages/Home';
 import LoanRoutes from './routes/LoanRoutes';
 import ComplaintPage from './modules/team5-complaint-management/ComplaintPage';
 import ComplaintStatus from './modules/team5-complaint-management/ComplaintStatus';
+import ComplaintAdmin from './modules/team5-complaint-management/ComplaintAdmin';
+import ComplaintRoutes from './routes/ComplaintRoutes';
+
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/complaint" element={<ComplaintPage />} />
-        <Route path="/complaint/query" element={<ComplaintStatus />} />
-
+        <Route path="/complaint/*" element={<ComplaintRoutes />} />
+      
         <Route path="/loan/*" element={<LoanRoutes />} />
       </Routes>
     </Router>
