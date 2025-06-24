@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import AppNavbar from '../../../components/Navbar';
+
 
 const LoanTypes = () => {
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ const LoanTypes = () => {
 
   return (
     <>
-      <AppNavbar />
       <Container className="mt-5">
         <h2 className="text-center mb-4">Select Loan Type</h2>
         <Row>

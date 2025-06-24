@@ -5,7 +5,6 @@ import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 function AccountsDashboard() {
   return (
     <>
-      <NavBar />
       <Container className="mt-4">
         <h2 className="mb-4">Accounts Dashboard</h2>
 

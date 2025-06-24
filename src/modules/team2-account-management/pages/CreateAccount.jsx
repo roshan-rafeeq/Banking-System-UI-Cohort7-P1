@@ -21,7 +21,6 @@ function CreateAccount() {
 
   return (
     <>
-      <NavBar />
       <Container className="mt-4">
         <h2 className="mb-4">Account Creation Form</h2>
 

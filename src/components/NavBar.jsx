@@ -29,8 +29,8 @@ function NavBar() {
 
             <Nav.Link href="/accounts">Accounts</Nav.Link>
             <Nav.Link href="/transfer">Transfer</Nav.Link>
-            <Nav.Link href="/loan-management">Loan management</Nav.Link>
-            <Nav.Link href="/complaint-management">Complaint management</Nav.Link>
+            <Nav.Link href="/loan">Loan management</Nav.Link>
+            <Nav.Link href="/complaint">Complaint management</Nav.Link>
             <Nav.Link href="/debit-cards">Debit Cards</Nav.Link>
           </Nav>
            <div className="d-flex gap-2">

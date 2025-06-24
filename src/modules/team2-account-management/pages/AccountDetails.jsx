@@ -51,7 +51,6 @@ function AccountDetails() {
 
   return (
     <>
-      <NavBar />
       <Container className="mt-4">
         <h2 className="mb-4">Account Details  {account.account_id}</h2>
 
