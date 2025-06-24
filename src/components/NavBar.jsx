@@ -42,7 +42,7 @@ function NavBar() {
               </NavDropdown.Item>
               <NavDropdown.Item href="/complaint/admin">Complaint View</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/debit-cards">Debit Cards</Nav.Link>
+            <Nav.Link href="/debit">Debit Cards</Nav.Link>
           </Nav>
            <div className="d-flex gap-2">
             <Button variant="outline-light" href="/login">Login</Button>
