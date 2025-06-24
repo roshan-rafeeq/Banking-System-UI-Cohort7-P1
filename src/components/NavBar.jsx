@@ -17,7 +17,7 @@ function NavBar() {
             height="30"
             className="d-inline-block align-top"
           />
-          Demo Bank
+          One Bank
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -29,8 +29,8 @@ function NavBar() {
 
             <Nav.Link href="/accounts">Accounts</Nav.Link>
             <Nav.Link href="/transfer">Transfer</Nav.Link>
-            <Nav.Link href="/loan">Loan management</Nav.Link>
-            <Nav.Link href="/complaint">Complaint management</Nav.Link>
+            <Nav.Link href="/loan">Loan</Nav.Link>
+            <Nav.Link href="/complaint">Complaint</Nav.Link>
             <Nav.Link href="/debit-cards">Debit Cards</Nav.Link>
           </Nav>
            <div className="d-flex gap-2">
