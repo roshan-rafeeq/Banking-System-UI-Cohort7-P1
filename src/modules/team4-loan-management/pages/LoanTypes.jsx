@@ -10,7 +10,7 @@ const LoanTypes = () => {
     {
       title: 'Gold Loan',
       description: 'Instant loans based on gold weight. Best for urgent needs.',
-      image: 'https://cdn-icons-png.flaticon.com/512/5727/5727120.png',
+      image: 'https://cdn-icons-png.flaticon.com/512/9691/9691574.png',
       route: 'gold'
     },
     {
@@ -20,9 +20,9 @@ const LoanTypes = () => {
       route: 'personal'
     },
     {
-      title: 'Property Loan',
-      description: 'Loan secured against property with low interest.',
-      image: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+      title: 'Home Loan',
+      description: 'Loan secured against Home with low interest.',
+      image: 'https://cdn-icons-png.flaticon.com/512/619/619032.png',
       route: 'property'
     }
   ];
