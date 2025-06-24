@@ -10,6 +10,7 @@ import ComplaintRoutes from './routes/ComplaintRoutes';
 import AccountsDashboard from './modules/team2-account-management/pages/AccountsDashboard';
 import Login from './modules/team1-customer-onboarding/Login';
 import SignUp from './modules/team1-customer-onboarding/SignUp';
+import TransferRoutes from './routes/TransferRoutes';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
          <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
+        <Route path="/transfer/*" element={<TransferRoutes />} />
         <Route path="/complaint/*" element={<ComplaintRoutes />} />
         <Route path="/accounts/*" element={<AccountRoutes />} />
         <Route path="/loan/*" element={<LoanRoutes />} />
