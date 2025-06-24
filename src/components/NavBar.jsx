@@ -30,12 +30,18 @@ function NavBar() {
             <Nav.Link href="/accounts">Accounts</Nav.Link>
             <Nav.Link href="/transfer">Transfer</Nav.Link>
             <Nav.Link href="/loan">Loan</Nav.Link>
-            <Nav.Link href="/complaint">Complaint</Nav.Link>
+             <NavDropdown title="Complaint " id="basic-nav-dropdown">
+              <NavDropdown.Item href="/complaint">Complaint Register</NavDropdown.Item>
+              <NavDropdown.Item href="/complaint/status">
+                Complaint Status
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/complaint/admin">Complaint View</NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link href="/debit-cards">Debit Cards</Nav.Link>
           </Nav>
            <div className="d-flex gap-2">
-            <Button variant="outline-light" href="#login">Login</Button>
-            <Button variant="light" href="#register">Register</Button>
+            <Button variant="outline-light" href="/login">Login</Button>
+            <Button variant="light" href="/register">Register</Button>
           </div>
         </Navbar.Collapse>
       </Container>
