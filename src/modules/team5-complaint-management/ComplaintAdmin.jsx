@@ -27,7 +27,7 @@ function ComplaintAdmin() {
       : complaints.filter((c) => c.status === filterStatus);
 
   return (
-    <div className="container mt-4" style={{ marginLeft: '400px' }}>
+    <div className="container mt-4" style={{ marginLeft: '40px' }}>
       <Card className="shadow-sm">
         <Card.Body>
           <h4 className="text-primary text-center mb-4">Complaint Admin Panel</h4>

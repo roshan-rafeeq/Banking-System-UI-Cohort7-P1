@@ -12,20 +12,7 @@ function ComplaintStatus() {
             {/* Left: Form */}
             <div className="col-md-6">
               <form>
-                {/* Ticket Number */}
-                <div style={{ marginBottom: '15px' }}>
-                  <input
-                    type="text"
-                    placeholder="Ticket Number"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      borderRadius: '6px',
-                      border: '1px solid #ccc',
-                    }}
-                    required
-                  />
-                </div>
+                
 
                 {/* Name */}
                 <div style={{ marginBottom: '15px' }}>
@@ -136,7 +123,7 @@ function ComplaintStatus() {
 
           {/* Right Procedure Content */}
           <div className="col-md-5">
-            <h5 style={{ color: '#0d6efd' }}>Level 1</h5>
+            {/* <h5 style={{ color: '#0d6efd' }}></h5> */}
             <h6 style={{ color: 'orange' }}>Not satisfied with our previous response?</h6>
             <p>
               If the resolution you received does not meet your expectations, please share the
