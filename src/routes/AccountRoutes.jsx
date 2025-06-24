@@ -9,7 +9,7 @@ const LoanRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<AccountsDashboard />} />
-      <Route path="/detail" element={<AccountDetails />} />
+       <Route path=":accountId" element={<AccountDetails />} />
       <Route path="/create" element={<CreateAccount />} />
 
     </Routes>
