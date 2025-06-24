@@ -29,7 +29,12 @@ function NavBar() {
 
             <Nav.Link href="/accounts">Accounts</Nav.Link>
             <Nav.Link href="/transfer">Transfer</Nav.Link>
-            <Nav.Link href="/loan">Loan</Nav.Link>
+            {/* <Nav.Link href="/loan">Loan</Nav.Link> */}
+            <NavDropdown title="Loan" id="standard-nav-dropdown">
+              <NavDropdown.Item href='/loan'>Loan Type</NavDropdown.Item>
+              <NavDropdown.Item href='/loan/status'>Loan Status</NavDropdown.Item>
+            </NavDropdown>
+
              <NavDropdown title="Complaint " id="basic-nav-dropdown">
               <NavDropdown.Item href="/complaint">Complaint Register</NavDropdown.Item>
               <NavDropdown.Item href="/complaint/status">
