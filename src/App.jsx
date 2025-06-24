@@ -7,6 +7,7 @@ import ComplaintStatus from './modules/team5-complaint-management/ComplaintStatu
 import ComplaintAdmin from './modules/team5-complaint-management/ComplaintAdmin';
 import ComplaintRoutes from './routes/ComplaintRoutes';
 
+import AccountsDashboard from './modules/team2-account-management/pages/AccountsDashboard';
 
 const App = () => {
   return (
@@ -15,7 +16,17 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/complaint/*" element={<ComplaintRoutes />} />
       
+
+        <Route path="/complaint" element={<ComplaintPage />} />
+        <Route path="/complaint/query" element={<ComplaintStatus />} />
+
+        
+        <Route path = "/accounts/" element={<AccountsDashboard/>} />
+        
+        
         <Route path="/loan/*" element={<LoanRoutes />} />
+
+        <Route path="*" element={<h2 className="text-center mt-5 ">404 - Page Not Found</h2>} />
       </Routes>
     </Router>
   );
