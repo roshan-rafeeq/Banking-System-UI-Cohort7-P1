@@ -1,81 +1,96 @@
-import React from 'react';
-import NavBar from '../../../components/Navbar';
-import { Container, Row, Col, Card, Table } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Card, Table, Spinner, Alert } from 'react-bootstrap';
+import axios from 'axios';
 
 function AccountsDashboard() {
+  const [accounts, setAccounts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/accounts')
+      .then(res => {
+        setAccounts(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Failed to fetch accounts');
+        setLoading(false);
+      });
+  }, []);
+
+  const totalAccounts = accounts.length;
+  const activeAccounts = accounts.filter(acc => acc.status === 'ACTIVE').length;
+  const closedAccounts = accounts.filter(acc => acc.status === 'CLOSED').length;
+
+  if (loading) return <Spinner animation="border" className="m-4" />;
+  if (error) return <Alert variant="danger" className="m-4">{error}</Alert>;
+
   return (
-    <>
-      <Container className="mt-4">
-        <h2 className="mb-4">Accounts Dashboard</h2>
+    <Container className="mt-4">
+      <h2 className="mb-4">Accounts Dashboard</h2>
 
-        <Row className="mb-4">
-          <Col md={4}>
-            <Card bg="primary" text="white">
-              <Card.Body>
-                <Card.Title>Total Accounts</Card.Title>
-                <Card.Text>1,234</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card bg="success" text="white">
-              <Card.Body>
-                <Card.Title>Active Accounts</Card.Title>
-                <Card.Text>1,000</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card bg="danger" text="white">
-              <Card.Body>
-                <Card.Title>Closed Accounts</Card.Title>
-                <Card.Text>234</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+      <Row className="mb-4">
+        <Col md={4}>
+          <Card bg="primary" text="white">
+            <Card.Body>
+              <Card.Title>Total Accounts</Card.Title>
+              <Card.Text>{totalAccounts}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card bg="success" text="white">
+            <Card.Body>
+              <Card.Title>Active Accounts</Card.Title>
+              <Card.Text>{activeAccounts}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card bg="danger" text="white">
+            <Card.Body>
+              <Card.Title>Closed Accounts</Card.Title>
+              <Card.Text>{closedAccounts}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
 
-        <Card>
-          <Card.Header>Account Summary</Card.Header>
-          <Card.Body>
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Account ID</th>
-                  <th>Account Type</th>
-                  <th>Status</th>
-                  <th>Holder Name</th>
-                  <th>Balance</th>
+      <Card>
+        <Card.Header>Account Summary</Card.Header>
+        <Card.Body>
+          <Table striped bordered hover responsive>
+            <thead>
+              <tr>
+                <th>Account ID</th>
+                <th>Account Type</th>
+                <th>Status</th>
+                <th>Customer ID</th>
+                <th>Balance</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {accounts.map(account => (
+                <tr key={account.accountId}>
+                  <td>{account.accountId}</td>
+                  <td>{account.accountType}</td>
+                  <td>{account.status}</td>
+                  <td>{account.customerId}</td>
+                  <td>
+                    ₹{account.balance.toLocaleString('en-IN', {
+                      maximumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td>{new Date(account.createdAt).toLocaleString()}</td>
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>AC001</td>
-                  <td>SAVINGS</td>
-                  <td>ACTIVE</td>
-                  <td>John Doe</td>
-                  <td>$5,000</td>
-                </tr>
-                <tr>
-                  <td>AC002</td>
-                  <td>LOAN</td>
-                  <td>CLOSED</td>
-                  <td>Jane Smith</td>
-                  <td>$0</td>
-                </tr>
-                <tr>
-                  <td>AC003</td>
-                  <td>CURRENT</td>
-                  <td>ACTIVE</td>
-                  <td>Michael Brown</td>
-                  <td>$12,450</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Card.Body>
-        </Card>
-      </Container>
-    </>
+              ))}
+            </tbody>
+          </Table>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
