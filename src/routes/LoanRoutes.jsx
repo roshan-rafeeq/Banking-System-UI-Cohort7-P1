@@ -1,7 +1,7 @@
 // src/routes/LoanRoutes.jsx
 
 import { Routes, Route } from 'react-router-dom';
-import ApplyLoan from '../modules/loan/pages/ApplyLoan';
+// import ApplyLoan from '../modules/loan/pages/ApplyLoan';
 // import LoanList from '../modules/loan/pages/LoanList';
 
 const LoanRoutes = () => {
