@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alert from './Alert'
 
 const Login = () => {
+    const context = useContext(customerContext);
+    const { id, setId}= context;
     const [credentials, setCredentials] = useState({ customerPhone: "", password: "" })
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
@@ -23,7 +25,7 @@ const Login = () => {
             const responseJson = await response.json();
             setShowAlert(true);
             console.log(responseJson.customerId);
-
+            setId(responseJson.customerId);
             setTimeout(() => {
                 setShowAlert(false);
                 navigate("/profile", {

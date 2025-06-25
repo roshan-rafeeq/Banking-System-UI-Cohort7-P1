@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { state } = location;
+
+  
 
   const getProfile = async () => {
     try {
-      const response = await fetch(`https://914f-103-141-55-30.ngrok-free.app/api/customer/${state}`, {
+      const response = await fetch(`https://914f-103-141-55-30.ngrok-free.app/api/customer/${}`, {
         method: "GET",
         headers: { 'ngrok-skip-browser-warning': 'true' }
       });

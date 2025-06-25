@@ -14,11 +14,13 @@ import TransferRoutes from './routes/TransferRoutes';
 import Profile from './modules/team1-customer-onboarding/Profile';
 
 import DebitCard from './routes/DebitRoutes';
+import CustomerState from './context/CustomerState';
 
 
 
 const App = () => {
   return (
+    <CustomerState>
     <Router>
       <NavBar />
       <Routes>
@@ -36,6 +38,7 @@ const App = () => {
         
        </Routes>
     </Router>
+    </CustomerState>
   );
 };
 
