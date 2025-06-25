@@ -72,7 +72,7 @@ function ComplaintStatus() {
           required
         />
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <button style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px' }} type="submit">
+          <button  style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px' }} type="submit">
             Search
           </button>
           <button

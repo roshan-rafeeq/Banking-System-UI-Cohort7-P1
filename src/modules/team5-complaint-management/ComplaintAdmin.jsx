@@ -1,121 +1,75 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import { Table, Container, Spinner, Alert, Card } from 'react-bootstrap';
 
 function ComplaintAdmin() {
   const [complaints, setComplaints] = useState([]);
-  const [filterStatus, setFilterStatus] = useState('All');
-  const location = useLocation();
-
-  const filterName = location.state?.filterName?.toLowerCase() || '';
-  const filterPhone = location.state?.filterPhone?.trim() || '';
+  const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    fetch('https://949b-103-141-55-30.ngrok-free.app/api/complaints') // ✅ Updated API
-      .then((res) => res.json())
-      .then((data) => {
-        setComplaints(data);
-      })
-      .catch((err) => console.error('Failed to fetch complaints', err));
+    const fetchComplaints = async () => {
+      try {
+        // const response = await fetch('https://dummyjson.com/products');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setComplaints(data.products); // Adjust based on your actual complaint schema
+        setLoading(false);
+      } catch (error) {
+        console.error('API Error:', error);
+        setErrorMsg('Failed to fetch complaints. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchComplaints();
   }, []);
 
-  const handleStatusChange = (id, newStatus) => {
-    const updated = complaints.map((c) =>
-      c.id === id ? { ...c, status: newStatus } : c
-    );
-    setComplaints(updated);
-
-    fetch(`https://949b-103-141-55-30.ngrok-free.app/api/complaints/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updated.find((c) => c.id === id)),
-    }).catch((err) => console.error('Failed to update status', err));
-  };
-
-  const filteredComplaints = complaints.filter((c) => {
-    const matchesStatus = filterStatus === 'All' || c.status === filterStatus;
-    const matchesName = filterName === '' || c.name?.toLowerCase().includes(filterName);
-    const matchesPhone = filterPhone === '' || c.phone?.includes(filterPhone);
-
-    return matchesStatus && matchesName && matchesPhone;
-  });
-
   return (
-    <div className="container mt-4" style={{ marginLeft: '40px' }}>
-      <Card className="shadow-sm">
-        <Card.Body>
-          <h4 className="text-primary text-center mb-4">Complaint Admin Panel</h4>
+    <Container className="py-5" style={{ backgroundColor: '#F1F6FB', minHeight: '100vh' }}>
+      <Card className="shadow-lg p-4 mb-4">
+        <h2 className="text-center text-primary mb-4">Customer Complaints Overview</h2>
 
-          {/* Filter by status */}
-          <div className="d-flex justify-content-end mb-3">
-            <Form.Select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              style={{ maxWidth: '200px' }}
-            >
-              <option value="All">All</option>
-              <option value="Pending">Pending</option>
-              <option value="Resolved">Resolved</option>
-            </Form.Select>
+        {loading && (
+          <div className="text-center my-5">
+            <Spinner animation="border" variant="primary" />
+            <p className="mt-3">Loading complaints...</p>
           </div>
+        )}
 
-          <div className="table-responsive">
-            <Table bordered hover className="text-center">
+        {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
+
+        {!loading && !errorMsg && (
+          <div style={{ overflowX: 'auto' }}>
+            <Table striped bordered hover responsive="md" className="mt-3">
               <thead className="table-primary">
                 <tr>
-                  <th>Complaint ID</th>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Description</th>
+                  <th>#</th>
+                  <th>Customer Name</th>
+                  <th>Complaint Type</th>
+                  <th>Details</th>
                   <th>Status</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredComplaints.length > 0 ? (
-                  filteredComplaints.map((c) => (
-                    <tr key={c.id}>
-                      <td>{c.id}</td>
-                      <td>{c.name}</td>
-                      <td>{c.type || 'N/A'}</td>
-                      <td>{c.complaint}</td>
-                      <td>
-                        <Form.Select
-                          size="sm"
-                          value={c.status}
-                          onChange={(e) => handleStatusChange(c.id, e.target.value)}
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Resolved">Resolved</option>
-                        </Form.Select>
-                      </td>
-                      <td>
-                        <Button
-                          size="sm"
-                          variant="info"
-                          onClick={() => alert(`Viewing complaint ID: ${c.id}`)}
-                        >
-                          View
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6">No matching complaints found.</td>
+                {complaints.map((item, index) => (
+                  <tr key={item.id || index}>
+                    <td>{index + 1}</td>
+                    <td>{item.brand}</td> {/* Replace with actual customerName */}
+                    <td>{item.category}</td> {/* Replace with complaintType */}
+                    <td>{item.description.slice(0, 60)}...</td> {/* Replace with complaintMessage */}
+                    <td>
+                      <span className="badge bg-warning text-dark">Pending</span>
+                    </td>
                   </tr>
-                )}
+                ))}
               </tbody>
             </Table>
           </div>
-        </Card.Body>
+        )}
       </Card>
-    </div>
+    </Container>
   );
 }
 
