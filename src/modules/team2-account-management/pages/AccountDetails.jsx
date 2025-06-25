@@ -83,8 +83,8 @@ function AccountDetails() {
                 {ledgerEntries.map(entry => (
                   <tr key={entry.ledger_entry_id}>
                     <td>{entry.timestamp}</td>
-                    <td>{entry.transaction_id}</td>
-                    <td>{entry.entry_type}</td>
+                    <td>{entry.referenceId}</td>
+                    <td>{entry.type}</td>
                     <td>₹{entry.amount.toLocaleString()}</td>
                     <td>{entry.status}</td>
                   </tr>
