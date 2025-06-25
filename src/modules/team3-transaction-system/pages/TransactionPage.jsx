@@ -1,54 +1,101 @@
 // src/components/TransferPage.jsx
 
 import '../../../css/TransactionPageCss.css';
-
+import { useNavigate } from 'react-router-dom';
 import React, { useState,useEffect} from 'react';
 import { sendTransferRequest,getTransactionHistory } from "../../../services/transactionService.js";
 
 function TransactionPage() {
   const [formData, setFormData] = useState({
-    senderAccount: '',
-    receiverAccount: '',
-    ifsc: '',
-    amount: '',
-  });
+  senderAccount: '',
+  receiverAccount: '',
+  ifsc: '',
+  amount: '',
+});
+
+  const [errors, setErrors] = useState({});
   const[transactions,setTransactions]=useState([]);
   useEffect(()=>{
     fetchTransactions();
   },[]);
+  const validateForm = () => {
+  const newErrors = {};
+
+  if (!formData.senderAccount) {
+    newErrors.senderAccount = "Sender account is required.";
+  } else if (!/^\d{10,16}$/.test(formData.senderAccount)) {
+    newErrors.senderAccount = "Must be 10–16 digits.";
+  }
+
+  if (!formData.receiverAccount) {
+    newErrors.receiverAccount = "Receiver account is required.";
+  } else if (!/^\d{10,16}$/.test(formData.receiverAccount)) {
+    newErrors.receiverAccount = "Must be 10–16 digits.";
+  }
+
+  if (!formData.ifsc) {
+    newErrors.ifsc = "IFSC code is required.";
+  } else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(formData.ifsc)) {
+    newErrors.ifsc = "Invalid IFSC format (e.g. HDFC0001234).";
+  }
+
+  if (!formData.amount) {
+    newErrors.amount = "Amount is required.";
+  } else if (isNaN(formData.amount) || Number(formData.amount) <= 0) {
+    newErrors.amount = "Amount must be a positive number.";
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!validateForm()) return;
+
+  try {
+    const response = await sendTransferRequest(formData);
+    console.log("Transfer Success:", response);
+    alert("Transfer request sent successfully!");
+
+    setFormData({
+      senderAccount: '',
+      receiverAccount: '',
+      ifsc: '',
+      amount: '',
+    });
+    setErrors({});
+  } catch (err) {
+    console.error("Transfer Failed:", err);
+    alert("Transfer failed. Please try again.");
+  }
+};
   const fetchTransactions=async()=>{
     const response=await getTransactionHistory();
     setTransactions(response.data)
   }
+  const navigate = useNavigate();
+  const handleShowHistory = () => {
+    navigate('/transfer/history');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  
 
-    try {
-      const response = await sendTransferRequest(formData);
-      console.log("Transfer Success:", response);
-      alert("Transfer request sent successfully!");
+  
 
-      setFormData({
-        senderAccount: '',
-        receiverAccount: '',
-        ifsc: '',
-        amount: '',
-      });
-    } catch (err) {
-      console.error("Transfer Failed:", err);
-      console.log("Fetch Failed");
-      alert("Transfer failed. Please try again.");
-    }
-  };
 
   return (
+    
     <div className="parent-container">
+      <div><img src="src\assets\mobile-banking-concept-illustration_114360-12788.avif" alt=" image Banking" /></div>
+      
       <div className="transfer-container">
         <div className="heading-form">
           <h2 className="transfer-title">Money Transfer</h2>
@@ -62,6 +109,7 @@ function TransactionPage() {
               value={formData.senderAccount}
               onChange={handleChange}
             />
+            {errors.senderAccount && <p className="error-text">{errors.senderAccount}</p>}
             <input
               type="text"
               name="receiverAccount"
@@ -70,6 +118,8 @@ function TransactionPage() {
               value={formData.receiverAccount}
               onChange={handleChange}
             />
+            {errors.receiverAccount && <p className="error-text">{errors.receiverAccount}</p>}
+
             <input
               type="text"
               name="ifsc"
@@ -78,6 +128,7 @@ function TransactionPage() {
               value={formData.ifsc}
               onChange={handleChange}
             />
+            {errors.ifsc && <p className="error-text">{errors.ifsc}</p>}
             <input
               type="number"
               name="amount"
@@ -86,13 +137,17 @@ function TransactionPage() {
               value={formData.amount}
               onChange={handleChange}
             />
+            {errors.amount && <p className="error-text">{errors.amount}</p>}
             <button type="submit" className="transfer-button">
               Transfer
+            </button>
+            <button onClick={handleShowHistory} className="transfer-button" >
+              Show Transactions
             </button>
           </form>
         </div>
 
-        <div className="transaction-history">
+        {/* <div className="transaction-history">
           <h3 className="history-title">Transaction History</h3>
                 <ul className="history-list">
                     {transactions.length === 0 ? (
@@ -111,8 +166,10 @@ function TransactionPage() {
                     )}
                 </ul>
 
-        </div>
+        </div> */}
+         
       </div>
+      
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Container, Spinner, Alert } from 'react-bootstrap';
+import { Table, Container, Spinner, Alert, Button } from 'react-bootstrap';
 // import { fetchAllLoans } from '../services/loanService'; // to connect backend
+import { Link } from 'react-router-dom';
 
 const LoanStatus = () => {
   const [loans, setLoans] = useState([]);
@@ -52,6 +53,7 @@ const LoanStatus = () => {
                 <th>Applicant Name</th>
                 <th>Amount</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -73,6 +75,11 @@ const LoanStatus = () => {
                     >
                       {loan.status}
                     </strong>
+                  </td>
+                  <td>
+                    <Link to={`/loan/status/${loan.id}`}>
+  <Button size="sm" variant="info"> View </Button> </Link>
+
                   </td>
                 </tr>
               ))}

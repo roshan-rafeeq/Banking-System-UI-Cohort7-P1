@@ -1,6 +1,8 @@
 /* src/pages/TransactionPageCss.css */
 
 /* Container */
+
+
 .parent-container{
     display: flex;
     justify-content:center;
@@ -14,19 +16,20 @@
     flex-direction: column;
 }
 .transfer-container {
-  /* max-width: 600px;*/
-  
+  width: 600px;
   padding: 30px;
   background-color: #c6c7c8;
   border-radius: 12px;
   box-shadow: 0 0 12px rgba(11, 115, 125, 0.15);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-left: 100px;
+
+  margin: 50px auto; /* Center horizontally */
   display: flex;
-  flex-direction: row
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center;
   
-    
 }
+
 
 /* Title */
 .transfer-title {
@@ -71,6 +74,8 @@
 
 .transfer-button:hover {
   background-color: #0B737D;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Transaction History */
@@ -104,4 +109,38 @@
 
 .history-item p {
   margin: 4px 0;
+}
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.transaction-table th,
+.transaction-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.transaction-table th {
+  background-color: #0B737D;
+  color: white;
+}
+.parent-container-history{
+  display: flex;
+  flex-direction: column;
+}
+.transfer-title-history{
+  text-align: center;
+  font-size: 40px;
+  color: #0B737D;
+  margin-bottom: 25px;
+  padding-bottom: 0cap;
+}
+.error-text {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  margin-bottom: 8px;
 }
