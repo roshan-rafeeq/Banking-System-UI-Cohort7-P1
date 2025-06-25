@@ -1,0 +1,33 @@
+.custom-input {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.card .card-body {
+  padding: 2rem;
+}
+
+.card {
+  border-radius: 1rem;
+}
+
+button.rounded-pill {
+  font-weight: 500;
+}
+
+button.rounded-pill:hover {
+  opacity: 0.9;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+form label {
+  font-weight: 500;
+}
+
+.alert-danger {
+  border-radius: 0.75rem;
+}
+
