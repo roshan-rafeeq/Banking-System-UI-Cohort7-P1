@@ -13,8 +13,13 @@ function AccountDetails() {
 
   useEffect(() => {
     // Fetch account details from backend
-    axios.get(`http://localhost:8080/api/accounts/${accountId}`)
+    axios.get(`http://localhost:8080/api/accounts/${accountId}`,{
+      headers: {
+        'ngrok-skip-browser-warning': 'true'
+      }
+    })
       .then((res) => {
+        console.log('Account details fetched:', res.data);
         setAccount(res.data);
         setLoading(false);
       })
@@ -26,6 +31,7 @@ function AccountDetails() {
    // Fetch ledger entries for the account
    axios.get(`http://localhost:8080/api/ledger/account/${accountId}`)
    .then((res) => {
+    console.log('Ledger entries fetched:', res.data);
     setLedgerEntries(res.data);
   })
   .catch((err) => {
@@ -49,8 +55,8 @@ function AccountDetails() {
           <Card.Body>
             <Row>
               <Col md={6}><strong>Customer ID:</strong> {account.customerId || 'N/A'}</Col>
-              <Col md={6}><strong>Account Type:</strong> {account.accountType}</Col>
-              <Col md={6}><strong>Branch:</strong> {account.branch || 'N/A'}</Col>
+              <Col md={6}><strong>Account Type:</strong> {account.accountTypeName}</Col>
+              <Col md={6}><strong>Branch:</strong> {account.branchName || 'N/A'}</Col>
               <Col md={6}><strong>Status:</strong> {account.status}</Col>
               <Col md={6}><strong>Balance:</strong> ₹{account.balance?.toLocaleString()}</Col>
               <Col md={6}><strong>Created At:</strong> {new Date(account.createdAt).toLocaleString()}</Col>
@@ -77,8 +83,8 @@ function AccountDetails() {
                 {ledgerEntries.map(entry => (
                   <tr key={entry.ledger_entry_id}>
                     <td>{entry.timestamp}</td>
-                    <td>{entry.transaction_id}</td>
-                    <td>{entry.entry_type}</td>
+                    <td>{entry.referenceId}</td>
+                    <td>{entry.type}</td>
                     <td>₹{entry.amount.toLocaleString()}</td>
                     <td>{entry.status}</td>
                   </tr>
