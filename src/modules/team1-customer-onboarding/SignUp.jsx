@@ -62,7 +62,7 @@ const SignUp = () => {
                     customerGender,
                     customerEmail,
                     customerPhone,
-                    CustomerAddress :{ 
+                    customerAddress :{ 
                         city,
                         state,
                         country,
