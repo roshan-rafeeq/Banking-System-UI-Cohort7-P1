@@ -10,8 +10,13 @@ function AccountsDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/accounts')
+    axios.get('http://localhost:8080/api/accounts', {
+      headers: {
+        'ngrok-skip-browser-warning': 'true'
+      }
+    })
       .then(res => {
+        console.log('Accounts fetched:', res.data);
         setAccounts(res.data);
         setLoading(false);
       })
@@ -70,7 +75,6 @@ function AccountsDashboard() {
                 <th>Status</th>
                 <th>Customer ID</th>
                 <th>Balance</th>
-                <th>Created At</th>
               </tr>
             </thead>
             <tbody>
@@ -85,7 +89,6 @@ function AccountsDashboard() {
                       maximumFractionDigits: 2,
                     })}
                   </td>
-                  <td>{new Date(account.createdAt).toLocaleString()}</td>
                   <td>
                     <Button
                       variant="outline-primary"

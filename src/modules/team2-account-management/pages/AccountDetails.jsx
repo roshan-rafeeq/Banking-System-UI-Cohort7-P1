@@ -13,8 +13,13 @@ function AccountDetails() {
 
   useEffect(() => {
     // Fetch account details from backend
-    axios.get(`http://localhost:8080/api/accounts/${accountId}`)
+    axios.get(`http://localhost:8080/api/accounts/${accountId}`,{
+      headers: {
+        'ngrok-skip-browser-warning': 'true'
+      }
+    })
       .then((res) => {
+        console.log('Account details fetched:', res.data);
         setAccount(res.data);
         setLoading(false);
       })
@@ -26,6 +31,7 @@ function AccountDetails() {
    // Fetch ledger entries for the account
    axios.get(`http://localhost:8080/api/ledger/account/${accountId}`)
    .then((res) => {
+    console.log('Ledger entries fetched:', res.data);
     setLedgerEntries(res.data);
   })
   .catch((err) => {
