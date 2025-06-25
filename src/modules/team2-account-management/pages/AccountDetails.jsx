@@ -59,8 +59,6 @@ function AccountDetails() {
               <Col md={6}><strong>Branch:</strong> {account.branchName || 'N/A'}</Col>
               <Col md={6}><strong>Status:</strong> {account.status}</Col>
               <Col md={6}><strong>Balance:</strong> ₹{account.balance?.toLocaleString()}</Col>
-              <Col md={6}><strong>Created At:</strong> {new Date(account.createdAt).toLocaleString()}</Col>
-              <Col md={6}><strong>Updated At:</strong> {new Date(account.updatedAt).toLocaleString()}</Col>
             </Row>
           </Card.Body>
         </Card>
@@ -77,16 +75,18 @@ function AccountDetails() {
                   <th>Type</th>
                   <th>Amount</th>
                   <th>Status</th>
+                  <th>Decription</th>
                 </tr>
               </thead>
               <tbody>
-                {ledgerEntries.map(entry => (
+                {[...ledgerEntries].reverse().map(entry => (
                   <tr key={entry.ledger_entry_id}>
-                    <td>{entry.timestamp}</td>
+                     <td>{new Date(entry.timestamp).toLocaleString()}</td>
                     <td>{entry.referenceId}</td>
                     <td>{entry.type}</td>
                     <td>₹{entry.amount.toLocaleString()}</td>
                     <td>{entry.status}</td>
+                     <td>{entry.description}</td>
                   </tr>
                 ))}
               </tbody>
