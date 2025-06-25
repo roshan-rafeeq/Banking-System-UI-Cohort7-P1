@@ -55,8 +55,8 @@ function AccountDetails() {
           <Card.Body>
             <Row>
               <Col md={6}><strong>Customer ID:</strong> {account.customerId || 'N/A'}</Col>
-              <Col md={6}><strong>Account Type:</strong> {account.accountType}</Col>
-              <Col md={6}><strong>Branch:</strong> {account.branch || 'N/A'}</Col>
+              <Col md={6}><strong>Account Type:</strong> {account.accountTypeName}</Col>
+              <Col md={6}><strong>Branch:</strong> {account.branchName || 'N/A'}</Col>
               <Col md={6}><strong>Status:</strong> {account.status}</Col>
               <Col md={6}><strong>Balance:</strong> ₹{account.balance?.toLocaleString()}</Col>
               <Col md={6}><strong>Created At:</strong> {new Date(account.createdAt).toLocaleString()}</Col>
