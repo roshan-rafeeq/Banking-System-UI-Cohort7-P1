@@ -4,15 +4,16 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 function CreateAccount() {
   const [formData, setFormData] = useState({
     customer_id: '',
-    account_type: '',
-    branch: ''
+    account_type_id: '',
+    branch_id: '',
+    account_id: '',
   });
 
   const [branches, setBranches] = useState([]);
   const [accountTypes, setAccountTypes] = useState([]);
 
+  // Set customer ID and fetch dropdown data
   useEffect(() => {
-    // Fetch branches and account types from backend
     const fetchDropdownData = async () => {
       try {
         const branchRes = await fetch("http://localhost:8080/api/branches");
@@ -30,32 +31,53 @@ function CreateAccount() {
 
     fetchDropdownData();
 
-    // Set default customer ID (you can replace this with real logic)
     const fakeCustomerId = "CUST123456";
     setFormData((prev) => ({ ...prev, customer_id: fakeCustomerId }));
   }, []);
 
+  // Auto-generate accountId whenever relevant fields change
+  useEffect(() => {
+    const { branch_id, customer_id, account_type_id } = formData;
+    if (branch_id && account_type_id && customer_id) {
+      const newAccountId = `${branch_id}-${customer_id}-${account_type_id}`;
+      setFormData((prev) => ({ ...prev, account_id: newAccountId }));
+    }
+  }, [formData.branch_id, formData.account_type_id, formData.customer_id]);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        accountId: formData.account_id,
+        customerId: formData.customer_id,
+        accountTypeId: formData.account_type_id,
+        branchId: formData.branch_id,
+        status: 'ACTIVE',
+        balance: 0
+      };
+
+      console.log("Payload being sent to backend:", payload);
+
       const response = await fetch("http://localhost:8080/api/accounts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
         alert("Account Created Successfully!");
         setFormData({
           customer_id: 'CUST123456',
-          account_type: '',
-          branch: ''
+          account_type_id: '',
+          branch_id: '',
+          account_id: ''
         });
       } else {
         alert("Failed to create account.");
@@ -74,7 +96,7 @@ function CreateAccount() {
           <Form onSubmit={handleSubmit}>
             <Row>
               <Col md={6}>
-                <Form.Group className="mb-3" controlId="customerId">
+                <Form.Group className="mb-3">
                   <Form.Label>Customer ID</Form.Label>
                   <Form.Control
                     type="text"
@@ -86,17 +108,17 @@ function CreateAccount() {
               </Col>
 
               <Col md={6}>
-                <Form.Group className="mb-3" controlId="accountType">
+                <Form.Group className="mb-3">
                   <Form.Label>Account Type</Form.Label>
                   <Form.Select
-                    name="account_type"
-                    value={formData.account_type}
+                    name="account_type_id"
+                    value={formData.account_type_id}
                     onChange={handleChange}
                     required
                   >
                     <option value="">Select Account Type</option>
                     {accountTypes.map((type) => (
-                      <option key={type.typeId} value={type.type}>
+                      <option key={type.typeId} value={type.typeId}>
                         {type.type} - {type.description}
                       </option>
                     ))}
@@ -105,21 +127,33 @@ function CreateAccount() {
               </Col>
 
               <Col md={6}>
-                <Form.Group className="mb-3" controlId="branch">
+                <Form.Group className="mb-3">
                   <Form.Label>Branch</Form.Label>
                   <Form.Select
-                    name="branch"
-                    value={formData.branch}
+                    name="branch_id"
+                    value={formData.branch_id}
                     onChange={handleChange}
                     required
                   >
-                    <option value="">Select a branch</option>
+                    <option value="">Select Branch</option>
                     {branches.map((b) => (
-                      <option key={b.branchId} value={b.branchName}>
+                      <option key={b.branchId} value={b.branchId}>
                         {b.branchName}
                       </option>
                     ))}
                   </Form.Select>
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Generated Account ID</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="account_id"
+                    value={formData.account_id}
+                    readOnly
+                  />
                 </Form.Group>
               </Col>
             </Row>
