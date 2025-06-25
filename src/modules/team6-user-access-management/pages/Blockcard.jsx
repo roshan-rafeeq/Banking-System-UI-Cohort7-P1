@@ -1,48 +1,111 @@
-import { useState } from 'react';
+
+           import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Blockcard() {
-  const [cardNumber, setCardNumber] = useState('');
-  const [reason, setReason] = useState('');
+  const { customerId } = useParams();
+  const [cards, setCards] = useState([]);
+  const [selectedCardId, setSelectedCardId] = useState("");
+  const [reason, setReason] = useState("");
+  const [selectedCardDetails, setSelectedCardDetails] = useState(null);
+
+  useEffect(() => {
+    axios.get(`https://914f-103-141-55-30.ngrok-free.app/api/customer/${customerId}`, {
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      const debitCards = response.data.debitCards || [];
+      setCards(debitCards);
+      if (debitCards.length > 0) {
+        setSelectedCardId(debitCards[0].cardId);
+        setSelectedCardDetails(debitCards[0]);
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching cards:", error);
+    });
+  }, [customerId]);
+
+  const handleCardChange = (e) => {
+    const cardId = e.target.value;
+    setSelectedCardId(cardId);
+    const foundCard = cards.find((card) => card.cardId === cardId);
+    setSelectedCardDetails(foundCard || null);
+  };
 
   const handleBlock = () => {
-    if (!cardNumber || !reason) {
-      alert("Please select a card and a reason.");
+    if (!reason) {
+      alert("Please provide a reason for blocking.");
       return;
     }
 
-    // 👉 You can add your API call here
-    alert(`Card ${cardNumber} has been blocked.\nReason: ${reason}`);
+    if (!selectedCardId || !selectedCardDetails) {
+      alert("Please select a card.");
+      return;
+    }
+
+    if (selectedCardDetails.status?.toLowerCase() === "blocked") {
+      alert("This card is already blocked.");
+      return;
+    }
+
+    axios.put(`https://your-backend-url/cards/block/${selectedCardId}`, {
+      reason,
+    })
+    .then(() => alert(`Card ${selectedCardDetails.cardNumber} blocked successfully.`))
+    .catch(() => alert("Failed to block the card."));
   };
 
   return (
-    <div className="container mt-5">
-      <h4>Block Card</h4>
+    <div className="container mt-4">
+      <h5>Block Debit Card</h5>
 
-      {/* Select Card */}
-      
+      {cards.length > 0 ? (
+        <>
+          <div className="mb-3">
+            <label className="form-label">Select Card</label>
+            <select
+              className="form-select"
+              value={selectedCardId}
+              onChange={handleCardChange}
+            >
+              {cards.map((card) => (
+                <option key={card.cardId} value={card.cardId}>
+                  {card.cardNumber}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {/* Select Reason */}
-      <div className="mb-3">
-        <label className="form-label">Reason for Blocking</label>
-        <select
-          className="form-select"
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-        >
-          <option value="">-- Select Reason --</option>
-          <option value="Lost card">Lost card</option>
-          <option value="Stolen card">Stolen card</option>
-          <option value="Suspicious activity">Suspicious activity</option>
-          <option value="Others">Others</option>
-        </select>
-      </div>
+          {selectedCardDetails && (
+            <div className="mb-3">
+              <p><strong>Card Number:</strong> {selectedCardDetails.cardNumber}</p>
+              <p><strong>Status:</strong> {selectedCardDetails.status}</p>
+            </div>
+          )}
 
-      {/* Centered Button */}
-      <div className="text-center mt-4">
-        <button className="btn btn-danger px-5" onClick={handleBlock}>
-          Block
-        </button>
-      </div>
+          <div className="mb-3">
+            <label className="form-label">Reason for Blocking</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="e.g. lost, stolen etc."
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+            />
+          </div>
+
+          <button className="btn btn-danger mt-2" onClick={handleBlock}>
+            Confirm Block
+          </button>
+        </>
+      ) : (
+        <p>No cards found for this customer.</p>
+      )}
     </div>
   );
 }

@@ -1,58 +1,60 @@
 // src/pages/ActivateCard.jsx
-import { useState } from 'react';
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 export default function ActivateCard() {
-  const [pin, setPin] = useState('');
-  const [confirmPin, setConfirmPin] = useState('');
+  const { cardId } = useParams();
+  const { state } = useLocation();
+  const card = state?.card;
+
+  const [pin, setPin] = useState("");
+  const [confirmPin, setConfirmPin] = useState("");
 
   const handleActivate = () => {
-    if (pin.length !== 4 || confirmPin.length !== 4) {
-      alert('PIN must be 4 digits.');
+    if (!pin || !confirmPin) {
+      alert("Please enter and confirm the PIN.");
       return;
     }
-
     if (pin !== confirmPin) {
-      alert('PINs do not match. Please try again.');
+      alert("PINs do not match.");
       return;
     }
 
-    // Proceed to API call
-    alert(`Card Activated with PIN: ${pin}`);
+    axios.put(`https://your-backend-url/cards/activate/${cardId}`, { pin })
+      .then(() => alert(`Card ${card?.cardNumber} activated successfully.`))
+      .catch(() => alert("Failed to activate the card."));
   };
 
   return (
-    <div className="container mt-5">
-      <h4>Activate Debit Card</h4>
-      <p className="text-muted">Click below to activate your card</p>
+    <div className="container mt-4">
+      <h5>Activate Card</h5>
+      <p>Card Number: {card?.cardNumber}</p>
 
       <div className="mb-3">
-        <label htmlFor="pinInput" className="form-label">Enter 4-digit PIN</label>
+        <label className="form-label">Enter PIN</label>
         <input
           type="password"
           className="form-control"
-          id="pinInput"
-          placeholder="Enter PIN"
-          maxLength={4}
           value={pin}
+          maxLength={4}
           onChange={(e) => setPin(e.target.value)}
         />
       </div>
 
       <div className="mb-3">
-        <label htmlFor="confirmPinInput" className="form-label">Confirm 4-digit PIN</label>
+        <label className="form-label">Confirm PIN</label>
         <input
           type="password"
           className="form-control"
-          id="confirmPinInput"
-          placeholder="Re-enter PIN"
-          maxLength={4}
           value={confirmPin}
+          maxLength={4}
           onChange={(e) => setConfirmPin(e.target.value)}
         />
       </div>
 
-      <button className="btn btn-primary w-100" onClick={handleActivate}>
-        Activate Now
+      <button className="btn btn-success mt-3" onClick={handleActivate}>
+        Confirm Activation
       </button>
     </div>
   );

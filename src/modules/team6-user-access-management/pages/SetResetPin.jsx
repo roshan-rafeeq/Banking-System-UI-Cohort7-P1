@@ -21,7 +21,7 @@ export default function SetAtmPin() {
 
   return (
     <div className="container mt-5">
-      <h4>Set / Reset ATM PIN</h4>
+      <h4>Reset  PIN</h4>
 
       <div className="mb-3 mt-4">
         <label className="form-label">Enter New 4-digit PIN</label>

@@ -7,13 +7,12 @@ import ActivateCard from '../modules/team6-user-access-management/pages/Activate
 
 function AppRoutes() {
   return (
-    <Routes>
-      {/* Other module routes */}
+     <Routes>
       <Route path="/" element={<Debit />} />
-      <Route path="/block" element={<Blockcard />} />
-      <Route path="/limits" element={<ManageLimits />} />
-      <Route path="/pin" element={<SetResetPin />} />
-      <Route path="/activate" element={<ActivateCard />} />
+      <Route path="block/:cardId" element={<Blockcard />} />
+      <Route path="limits/:cardId" element={<ManageLimits />} />
+      <Route path="pin/:cardId" element={<SetResetPin />} />
+      <Route path="activate/:cardId" element={<ActivateCard />} />
     </Routes>
   );
 }
