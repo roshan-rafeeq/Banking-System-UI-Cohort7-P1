@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
 
 function ComplaintPage() {
   const handleSubmit = (e) => {
@@ -17,98 +18,178 @@ function ComplaintPage() {
       complaint: form.formComplaint.value,
     };
 
-    fetch('https://949b-103-141-55-30.ngrok-free.app/api/complaints', {
+    fetch('https://7089-103-233-64-100.ngrok-free.app/api/complaints', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to submit complaint');
+        if (response.ok) {
+          alert('✅ Your complaint has been successfully registered.');
+          form.reset();
+        } else {
+          alert('⚠️ Something went wrong. Please try again later.');
         }
-        return response.json(); // Parse response JSON
-      })
-      .then((responseData) => {
-        alert(`Complaint submitted successfully!\nCustomer ID: ${responseData.customerId}`);
-        form.reset();
       })
       .catch((error) => {
         console.error('Error:', error);
-        alert('Something went wrong. Try again later.');
+        alert('❌ An error occurred while submitting your complaint.');
       });
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
-      <div style={{ width: '100%', padding: '40px' }}>
-        <Row className="g-10 align-items-center">
-          <Col md={6} className="text-center">
-            <img
-              src="/images/complaint.png"
-              alt="Customer Support"
-              style={{
-                width: '90%',
-                maxWidth: '600px',
-                height: 'auto',
-              }}
-            />
-          </Col>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#F1F6FB',
+        padding: '40px 20px',
+      }}
+    >
+      <Row className="g-5 align-items-center">
+        {/* LEFT SIDE IMAGE + MESSAGE */}
+        <Col md={6} className="text-center">
+          <img
+            src="images/complaint.png"
+            alt="Customer Support"
+            style={{
+              width: '100%',
+              maxWidth: '400px',
+              height: 'auto',
+              marginBottom: '20px',
+              borderRadius: '12px',
+              boxShadow: '0 6px 15px rgba(0,0,0,0.1)',
+            }}
+          />
+          <div
+            style={{
+              backgroundColor: '#E2EFFB',
+              color: '#1F3C88',
+              padding: '15px 25px',
+              fontSize: '18px',
+              fontWeight: '600',
+              borderRadius: '10px',
+              display: 'inline-block',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.07)',
+            }}
+          >
+            🤝 Need Assistance? Submit your complaint below.
+          </div>
+        </Col>
 
-          <Col md={6}>
-            <div
-              style={{
-                padding: '40px',
-                background: '#ffffff',
-                borderRadius: '12px',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <h3 className="mb-4 text-center text-primary">Submit Your Complaint</h3>
+        {/* RIGHT SIDE FORM */}
+        <Col md={6}>
+          <Card
+            style={{
+              backgroundColor: '#fff',
+              borderRadius: '12px',
+              border: '1px solid #d9e4f0',
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.05)',
+            }}
+          >
+            <Card.Body>
+              <Card.Title
+                className="mb-3 text-center"
+                style={{ color: '#1F3C88', fontWeight: '700', fontSize: '24px' }}
+              >
+                📩 Register a Complaint
+              </Card.Title>
+
+              <p className="text-muted text-center mb-4" style={{ fontSize: '14px' }}>
+                Please provide accurate information. Our support team will reach out shortly.
+              </p>
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formName">
                   <Form.Label>Full Name</Form.Label>
-                  <Form.Control type="text" placeholder="Enter your name" required />
+                  <Form.Control
+                    type="text"
+                    placeholder="John Doe"
+                    required
+                    style={{ borderRadius: '8px' }}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" placeholder="name@example.com" required />
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                    style={{ borderRadius: '8px' }}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formPhone">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Form.Control type="tel" placeholder="Enter your phone number" required />
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Enter your phone number"
+                    required
+                    style={{ borderRadius: '8px' }}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formLoanType">
-                  <Form.Label>Type</Form.Label>
-                  <Form.Select required>
-                    <option value="">Select Type</option>
-                    <option>Loan</option>
-                    <option>Account</option>
-                    <option>Credit</option>
-                    <option>Transaction</option>
+                  <Form.Label>Complaint Type</Form.Label>
+                  <Form.Select required style={{ borderRadius: '8px' }}>
+                    <option value="">-- Select Category --</option>
+                    <option>Loan Related</option>
+                    <option>Account Access</option>
+                    <option>Credit/Debit Issues</option>
+                    <option>Transaction Failure</option>
+                    <option>Other</option>
                   </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formComplaint">
-                  <Form.Label>Complaint Message</Form.Label>
-                  <Form.Control as="textarea" rows={3} placeholder="Describe your issue..." required />
+                <Form.Group className="mb-4" controlId="formComplaint">
+                  <Form.Label>Complaint Description</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={4}
+                    placeholder="Describe your issue in detail..."
+                    required
+                    style={{ borderRadius: '8px' }}
+                  />
                 </Form.Group>
 
                 <div className="text-center">
-                  <Button variant="primary" type="submit" className="px-4">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="px-5 py-2"
+                    style={{
+                      backgroundColor: '#1F3C88',
+                      border: 'none',
+                      borderRadius: '8px',
+                    }}
+                  >
                     Submit Complaint
                   </Button>
                 </div>
               </Form>
-            </div>
-          </Col>
-        </Row>
-      </div>
+
+              {/* EMAIL SUPPORT */}
+              <div className="text-center mt-4">
+                <p style={{ marginBottom: '6px' }}>Still have questions?</p>
+                <a
+                  href="mailto:support@example.com?subject=Complaint%20Assistance"
+                  style={{
+                    display: 'inline-block',
+                    padding: '8px 16px',
+                    border: '1px solid #17a2b8',
+                    borderRadius: '6px',
+                    color: '#17a2b8',
+                    textDecoration: 'none',
+                    fontWeight: '500',
+                  }}
+                >
+                  📧 Email Support
+                </a>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 }
