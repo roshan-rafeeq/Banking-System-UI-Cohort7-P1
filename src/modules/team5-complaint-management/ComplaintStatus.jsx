@@ -1,148 +1,129 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ComplaintStatus() {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate('/complaint/admin', {
+      state: {
+        filterName: name.trim(),
+        filterPhone: phone.trim(),
+      },
+    });
+  };
+
   return (
-    <div id="Complaint">
-      <div style={{ padding: '30px' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Your Request Status</h1>
+    <div style={{ padding: '30px' }}>
+      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Search Complaint Status</h1>
 
-        {/* Row to separate form and image */}
-        <div className="container py-4" style={{ maxWidth: '1000px' }}>
-          <div className="row align-items-center">
-            {/* Left: Form */}
-            <div className="col-md-6">
-              <form>
-                
+      {/* Loader Animation */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: '30px'
+      }}>
+        <div style={{ position: 'relative', width: '130px' }}>
+          {/* Bar 1 */}
+          <div style={{
+            width: '100%',
+            height: '8px',
+            background: 'linear-gradient(to right, rgb(161, 94, 255), rgb(217, 190, 255), rgb(161, 94, 255))',
+            backgroundSize: '200% 100%',
+            borderRadius: '10px',
+            animation: 'barAnim 3s ease-in-out infinite alternate-reverse'
+          }} />
 
-                {/* Name */}
-                <div style={{ marginBottom: '15px' }}>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      borderRadius: '6px',
-                      border: '1px solid #ccc',
-                    }}
-                    required
-                  />
-                </div>
-
-                {/* Phone */}
-                <div style={{ marginBottom: '15px' }}>
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      borderRadius: '6px',
-                      border: '1px solid #ccc',
-                    }}
-                    required
-                  />
-                </div>
-
-                {/* Buttons */}
-                <div>
-                  <button type="submit" className="btn btn-primary me-2">
-                    Submit
-                  </button>
-                  <button type="reset" className="btn btn-secondary">
-                    Clear
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            {/* Right: Image */}
-            <div className="col-md-6 text-center">
-              <img
-                src="/images/complaintstatus.avif"
-                alt="Ticket Status"
-                style={{
-                  width: '80%',
-                  height: 'auto',
-                  maxWidth: '300px',
-                  borderRadius: '10px',
-                  marginTop: '15px'
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Complaint Procedure */}
-        <h2 className="text-primary mt-5 mb-3">Raise a Complaint</h2>
-        <p>
-          If you have a complaint to submit to the bank for resolution, please follow the procedure below.
-        </p>
-
-        <div className="row mt-4" style={{ display: 'flex', gap: '30px' }}>
-          {/* Left Levels */}
-          <div className="col-md-5">
-            <div
-              style={{
-                backgroundColor: '#fff8e1',
-                padding: '20px',
-                marginBottom: '20px',
-                borderLeft: '4px solid orange',
-                borderRadius: '8px',
-              }}
-            >
-              <strong style={{ color: 'orange' }}>Level 1</strong>
-              <h5 style={{ marginTop: '10px' }}>
-                Not satisfied with our previous response?
-              </h5>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: '#f8f9fa',
-                padding: '20px',
-                marginBottom: '20px',
-                borderRadius: '8px',
-              }}
-            >
-              <strong>Level 2</strong>
-              <p>Not satisfied with the resolution provided on the Level 1</p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: '#f8f9fa',
-                padding: '20px',
-                borderRadius: '8px',
-              }}
-            >
-              <strong>Level 3</strong>
-              <p>Not satisfied with the resolution given?</p>
-            </div>
-          </div>
-
-          {/* Right Procedure Content */}
-          <div className="col-md-5">
-            {/* <h5 style={{ color: '#0d6efd' }}></h5> */}
-            <h6 style={{ color: 'orange' }}>Not satisfied with our previous response?</h6>
-            <p>
-              If the resolution you received does not meet your expectations, please share the
-              details of your complaint with our Phone Banking escalation team via email.
-            </p>
-
-            <div className="mb-3">
-              <a
-                href="mailto:support@example.com?subject=Complaint&body=Dear Support,"
-                style={{ textDecoration: 'none' }}
-              >
-                <button className="btn btn-warning rounded-pill px-4 me-3">
-                  Send an Email
-                </button>
-              </a>
-            </div>
-          </div>
+          {/* Bar 2 */}
+          <div style={{
+            width: '50%',
+            height: '8px',
+            marginTop: '10px',
+            background: 'linear-gradient(to right, rgb(161, 94, 255), rgb(217, 190, 255), rgb(161, 94, 255))',
+            backgroundSize: '200% 100%',
+            borderRadius: '10px',
+            animation: 'barAnim 3s ease-in-out infinite alternate-reverse'
+          }} />
         </div>
       </div>
+
+      <form
+        onSubmit={handleSubmit}
+        style={{ maxWidth: '500px', margin: '0 auto' }}
+      >
+        <input
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={{ width: '100%', padding: '10px', marginBottom: '15px', borderRadius: '5px', border: '1px solid #ccc' }}
+          required
+        />
+        <input
+          type="tel"
+          placeholder="Enter Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          style={{ width: '100%', padding: '10px', marginBottom: '15px', borderRadius: '5px', border: '1px solid #ccc' }}
+          required
+        />
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <button style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px' }} type="submit">
+            Search
+          </button>
+          <button
+            type="button"
+            style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: '#fff', border: 'none', borderRadius: '5px' }}
+            onClick={() => {
+              setName('');
+              setPhone('');
+            }}
+          >
+            Clear
+          </button>
+        </div>
+      </form>
+
+      {/* Image Display */}
+      <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        <img
+          src="/images/complaintstatus.avif"
+          alt="Complaint Status Illustration"
+          style={{ maxWidth: '300px', width: '100%', borderRadius: '10px' }}
+        />
+      </div>
+
+      {/* Email Contact Option */}
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <p style={{ marginBottom: '8px' }}>Need help or have questions?</p>
+        <a
+          href="mailto:support@example.com?subject=Complaint%20Status%20Inquiry"
+          style={{
+            display: 'inline-block',
+            padding: '10px 15px',
+            border: '1px solid #17a2b8',
+            borderRadius: '5px',
+            color: '#17a2b8',
+            textDecoration: 'none'
+          }}
+        >
+          📧 Email Us
+        </a>
+      </div>
+
+      {/* Keyframes injected via style tag */}
+      <style>
+        {`
+          @keyframes barAnim {
+            0% { background-position: left; }
+            100% { background-position: right; }
+          }
+        `}
+      </style>
     </div>
   );
 }
