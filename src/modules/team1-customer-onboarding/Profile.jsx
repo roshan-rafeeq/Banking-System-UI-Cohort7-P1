@@ -1,8 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 
 const Profile = () => {
+
+   const { customerId } = useContext(AuthContext);
+
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
@@ -10,7 +14,7 @@ const Profile = () => {
 
   const getProfile = async () => {
     try {
-      const response = await fetch(`https://914f-103-141-55-30.ngrok-free.app/api/customer/${}`, {
+      const response = await fetch(`https://914f-103-141-55-30.ngrok-free.app/api/customer/${customerId}`, {
         method: "GET",
         headers: { 'ngrok-skip-browser-warning': 'true' }
       });

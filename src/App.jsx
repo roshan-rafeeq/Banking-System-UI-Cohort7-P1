@@ -14,31 +14,31 @@ import TransferRoutes from './routes/TransferRoutes';
 import Profile from './modules/team1-customer-onboarding/Profile';
 
 import DebitCard from './routes/DebitRoutes';
-import CustomerState from './context/CustomerState';
+import AuthProvider from './context/AuthProvider';
 
 
 
 const App = () => {
   return (
-    <CustomerState>
-    <Router>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<SignUp />} />
-        <Route path="/transfer/*" element={<TransferRoutes />} />
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="/complaint/*" element={<ComplaintRoutes />} />
-        <Route path="/accounts/*" element={<AccountRoutes />} />
-        <Route path="/loan/*" element={<LoanRoutes />} />
-        <Route path="*" element={<h2 className="text-center mt-5">404 - Page Not Found</h2>} />
-         
-         <Route path="/debit/*" element={<DebitCard />} />
-        
-       </Routes>
-    </Router>
-    </CustomerState>
+    <AuthProvider>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="/transfer/*" element={<TransferRoutes />} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/complaint/*" element={<ComplaintRoutes />} />
+          <Route path="/accounts/*" element={<AccountRoutes />} />
+          <Route path="/loan/*" element={<LoanRoutes />} />
+          <Route path="*" element={<h2 className="text-center mt-5">404 - Page Not Found</h2>} />
+          
+          <Route path="/debit/*" element={<DebitCard />} />
+          
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 
