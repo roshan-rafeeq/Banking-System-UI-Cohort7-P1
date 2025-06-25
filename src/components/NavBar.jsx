@@ -17,7 +17,7 @@ function NavBar() {
             height="30"
             className="d-inline-block align-top"
           />
-          One Bank
+          FinSecure
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
