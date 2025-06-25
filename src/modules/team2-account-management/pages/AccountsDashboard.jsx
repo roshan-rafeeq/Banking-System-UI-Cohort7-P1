@@ -16,7 +16,7 @@ function AccountsDashboard() {
       }
     })
       .then(res => {
-        console.log('Accounts fetched:', res.data);
+        console.log('Fetched accounts:', res.data);
         setAccounts(res.data);
         setLoading(false);
       })
@@ -81,7 +81,7 @@ function AccountsDashboard() {
               {accounts.map(account => (
                 <tr key={account.accountId}>
                   <td>{account.accountId}</td>
-                  <td>{account.accountType}</td>
+                  <td>{account.accountTypeName}</td>
                   <td>{account.status}</td>
                   <td>{account.customerId}</td>
                   <td>

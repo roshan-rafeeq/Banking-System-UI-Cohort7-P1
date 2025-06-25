@@ -31,7 +31,7 @@ function CreateAccount() {
 
     fetchDropdownData();
 
-    const fakeCustomerId = "CUST123456";
+    const fakeCustomerId = "CUST9876";
     setFormData((prev) => ({ ...prev, customer_id: fakeCustomerId }));
   }, []);
 
