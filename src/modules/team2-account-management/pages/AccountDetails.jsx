@@ -77,16 +77,18 @@ function AccountDetails() {
                   <th>Type</th>
                   <th>Amount</th>
                   <th>Status</th>
+                  <th>Decription</th>
                 </tr>
               </thead>
               <tbody>
-                {ledgerEntries.map(entry => (
+                {[...ledgerEntries].reverse().map(entry => (
                   <tr key={entry.ledger_entry_id}>
                     <td>{entry.timestamp}</td>
                     <td>{entry.referenceId}</td>
                     <td>{entry.type}</td>
                     <td>₹{entry.amount.toLocaleString()}</td>
                     <td>{entry.status}</td>
+                     <td>{entry.description}</td>
                   </tr>
                 ))}
               </tbody>
