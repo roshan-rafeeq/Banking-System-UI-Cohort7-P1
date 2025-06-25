@@ -32,6 +32,7 @@ const SignUp = () => {
     }
     const handleGenderChange = (e) => {
         setGender(e.target.value)
+        setCredentials({ ...credentials, customerGender: e.target.value });
     }
     const submit = async (e) => {
         e.preventDefault();

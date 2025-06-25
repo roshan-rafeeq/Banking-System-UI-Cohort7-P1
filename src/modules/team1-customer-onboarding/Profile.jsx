@@ -9,8 +9,8 @@ const Profile = () => {
 
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { state } = location;
+
+  
 
   const getProfile = async () => {
     try {
