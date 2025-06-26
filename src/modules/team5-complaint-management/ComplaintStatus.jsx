@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,7 +73,7 @@ function ComplaintStatus() {
           required
         />
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <button style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px' }} type="submit">
+          <button  style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px' }} type="submit">
             Search
           </button>
           <button
@@ -98,7 +99,7 @@ function ComplaintStatus() {
       </div>
 
       {/* Email Contact Option */}
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      {/* <div style={{ textAlign: 'center', marginTop: '20px' }}>
         <p style={{ marginBottom: '8px' }}>Need help or have questions?</p>
         <a
           href="mailto:support@example.com?subject=Complaint%20Status%20Inquiry"
@@ -113,7 +114,7 @@ function ComplaintStatus() {
         >
           📧 Email Us
         </a>
-      </div>
+      </div> */}
 
       {/* Keyframes injected via style tag */}
       <style>
