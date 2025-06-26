@@ -9,34 +9,33 @@ function TransactionPage() {
   const [formData, setFormData] = useState({
   senderAccount: '',
   receiverAccount: '',
-  ifsc: '',
+  receiverAccount: '',
+  currency: 'INR', // default value
   amount: '',
 });
 
   const [errors, setErrors] = useState({});
   const[transactions,setTransactions]=useState([]);
   useEffect(()=>{
-    fetchTransactions();
+    // fetchTransactions();
   },[]);
   const validateForm = () => {
   const newErrors = {};
 
-  if (!formData.senderAccount) {
-    newErrors.senderAccount = "Sender account is required.";
-  } else if (!/^\d{10,16}$/.test(formData.senderAccount)) {
-    newErrors.senderAccount = "Must be 10–16 digits.";
-  }
+  // if (!formData.senderAccount) {
+  //   newErrors.senderAccount = "Sender account is required.";
+  // } else if (!/^\d{10,16}$/.test(formData.senderAccount)) {
+  //   newErrors.senderAccount = "Must be 10–16 digits.";
+  // }
 
-  if (!formData.receiverAccount) {
-    newErrors.receiverAccount = "Receiver account is required.";
-  } else if (!/^\d{10,16}$/.test(formData.receiverAccount)) {
-    newErrors.receiverAccount = "Must be 10–16 digits.";
-  }
+  // if (!formData.receiverAccount) {
+  //   newErrors.receiverAccount = "Receiver account is required.";
+  // } else if (!/^\d{10,16}$/.test(formData.receiverAccount)) {
+  //   newErrors.receiverAccount = "Must be 10–16 digits.";
+  // }
 
-  if (!formData.ifsc) {
-    newErrors.ifsc = "IFSC code is required.";
-  } else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(formData.ifsc)) {
-    newErrors.ifsc = "Invalid IFSC format (e.g. HDFC0001234).";
+  if (!formData.currency) {
+    newErrors.currency = "Currency is required.";
   }
 
   if (!formData.amount) {
@@ -49,20 +48,31 @@ function TransactionPage() {
   return Object.keys(newErrors).length === 0;
 };
 
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (!validateForm()) return;
 
   try {
-    const response = await sendTransferRequest(formData);
+    console.log("inside the form submit");
+    
+    
+    const response = await fetch(`https://many-shark-kind.ngrok-free.app/api/transactions/create`, {
+  method: "POST",
+  headers: {
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true'
+  },
+  body: JSON.stringify(formData)
+});
     console.log("Transfer Success:", response);
     alert("Transfer request sent successfully!");
 
     setFormData({
       senderAccount: '',
       receiverAccount: '',
-      ifsc: '',
+      currency: 'INR',
       amount: '',
     });
     setErrors({});
@@ -87,8 +97,11 @@ const handleSubmit = async (e) => {
   
 
   
-
   
+{
+  console.log("ihfdiasjdfnkajdfas", formData);
+  
+}
 
 
   return (
@@ -120,15 +133,18 @@ const handleSubmit = async (e) => {
             />
             {errors.receiverAccount && <p className="error-text">{errors.receiverAccount}</p>}
 
-            <input
-              type="text"
-              name="ifsc"
-              placeholder="IFSC Code"
+            <select
+              name="currency"
               className="input-field"
-              value={formData.ifsc}
+              value={formData.currency}
               onChange={handleChange}
-            />
-            {errors.ifsc && <p className="error-text">{errors.ifsc}</p>}
+            >
+                  <option value="INR">INR</option>
+                  <option value="USD">USD</option>
+                  <option value="POUND">Pound</option>
+                  <option value="DINAR">Dinar</option>
+                </select>
+{                   errors.currency && <p className="error-text">{errors.currency}</p>}
             <input
               type="number"
               name="amount"

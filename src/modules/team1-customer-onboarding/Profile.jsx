@@ -10,11 +10,11 @@ const Profile = () => {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
-  
+  console.log(customerId)
 
   const getProfile = async () => {
     try {
-      const response = await fetch(`https://5140-103-141-55-30.ngrok-free.app/api/customer/${customerId}`, {
+      const response = await fetch(`https://spider-fond-buck.ngrok-free.app/api/customer/${localStorage.getItem("customerId")}`, {
         method: "GET",
         headers: { 'ngrok-skip-browser-warning': 'true' }
       });
@@ -87,7 +87,7 @@ const Profile = () => {
               </span>
             </div>
           </div>
-          <Button className="btn btn-outline-light" onClick={()=>{navigate("/accounts/create",{state:state})}}>Create Account</Button>
+          <Button className="btn btn-outline-light" onClick={()=>{navigate("/accounts/create")}}>Create Account</Button>
           {/* <button
             className="btn btn-outline-light"
             onClick={() => navigate("/login", { replace: true })}
@@ -136,7 +136,7 @@ const Profile = () => {
         <div className="card-footer text-end bg-white" style={{ borderBottomLeftRadius: "22px", borderBottomRightRadius: "22px" }}>
           <button
             className="btn btn-danger px-4"
-            onClick={() => {navigate("/login"); setIsAuthenticated(false);}}
+            onClick={() => {navigate("/login"); setIsAuthenticated(false);localStorage.removeItem("customerId");}}
           >
             <i className="bi bi-box-arrow-right me-2"></i>
             Logout
