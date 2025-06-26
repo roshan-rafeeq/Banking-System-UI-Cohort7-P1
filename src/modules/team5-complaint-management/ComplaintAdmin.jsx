@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import AuthProvider from '../../context/AuthProvider';
 
 function ComplaintAdmin() {
   const [complaints, setComplaints] = useState([]);
