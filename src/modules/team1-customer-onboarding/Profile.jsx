@@ -87,7 +87,7 @@ const Profile = () => {
               </span>
             </div>
           </div>
-          <Button className="btn btn-outline-light" onClick={()=>{navigate("/accounts/create",{state:state})}}>Create Account</Button>
+          <Button className="btn btn-outline-light" onClick={()=>{navigate("/accounts/create")}}>Create Account</Button>
           {/* <button
             className="btn btn-outline-light"
             onClick={() => navigate("/login", { replace: true })}
