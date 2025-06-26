@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
+//Check how to use context in functional components
 const Home = () => {
   const navigate = useNavigate();
+  const {customerId} = useContext(AuthContext); 
+  console.log("Customer ID:", customerId);
 
   return (
     <div style={{ backgroundColor: '#f5f7fa', minHeight: '100vh', paddingTop: '40px' }}>
