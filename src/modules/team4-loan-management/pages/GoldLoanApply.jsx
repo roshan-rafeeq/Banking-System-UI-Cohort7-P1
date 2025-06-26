@@ -71,7 +71,7 @@ const GoldLoanApply = () => {
     e.preventDefault();
     try {
       const res = await applyGoldLoan(formData);
-      if (!res.ok) throw new Error('Failed to submit loan');
+      // if (!res.ok) throw new Error('Failed to submit loan');
       setSubmitted(true);
     } catch (err) {
       setError('Something went wrong while applying for loan.');

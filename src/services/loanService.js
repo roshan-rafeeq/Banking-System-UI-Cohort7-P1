@@ -1,7 +1,7 @@
 // src/services/loanService.js
 import AuthProvider from "../context/AuthProvider";
 
-const BASE_URL = 'https://tidy-gibbon-typically.ngrok-free.app/loans';
+const BASE_URL = 'http://tidy-gibbon-typically.ngrok-free.app/loans';
 
 export const applyGoldLoan = async (data) => {
   return await fetch(`${BASE_URL}/goldLoan/apply`, {
