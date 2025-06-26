@@ -1,11 +1,17 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import AuthContext from '../../context/AuthContext';
 
 function ComplaintPage() {
+
+  const { customerId } = useContext(AuthContext);
+  console.log(customerId);
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -72,7 +78,7 @@ function ComplaintPage() {
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.07)',
             }}
           >
-            🤝 Need Assistance? Submit your complaint below.
+            🤝 Need Assistance? Submit your complaint.
           </div>
         </Col>
 
