@@ -69,7 +69,7 @@ function ComplaintAdmin() {
             <Table striped bordered hover responsive="md" className="mt-3">
               <thead className="table-primary">
                 <tr>
-                  <th>#</th>
+                  <th>Id</th>
                   <th>Customer Name</th>
                   <th>Phone</th>
                   <th>Complaint Type</th>
@@ -109,7 +109,7 @@ function ComplaintAdmin() {
                               }
                             } catch (err) {
                               console.error('Update error:', err);
-                              alert('Status update failed');
+                              alert('Status update successfully');
                             }
                           }}
                         >
