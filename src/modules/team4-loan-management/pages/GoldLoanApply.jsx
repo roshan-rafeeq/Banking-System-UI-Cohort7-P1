@@ -1,176 +1,176 @@
-import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
-// import AppNavbar from '../../../components/Navbar';
+import React, { useContext, useEffect, useState } from 'react';
+import { Container, Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import AuthContext from '../../../context/AuthContext';
+import { applyGoldLoan } from '../../../services/loanService';
+import { getCustomerDetails } from '../../../services/customerService';
 
 const GoldLoanApply = () => {
+  const { customerId } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
   const [formData, setFormData] = useState({
-    fullName: '',
-    pan: '',
-    aadhaar: '',
-    mobile: '',
-    address: '',
-    goldWeight: '',
+    customerId: '',
+    customerName: '',
+    customerPAN: '',
+    customerADHAAR: '',
+    customerAddress: '',
+    goldGrams: '',
     loanAmount: '',
+    interestRate: 7.5,   // Dummy rate
+    tenure: 12,          // Dummy in months
+    emi: 0,
+    type: 'Gold Loan',
+    status: 'Pending',
   });
 
-  const [submitted, setSubmitted] = useState(false);
+  // Fetch & prefill data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const customer = await getCustomerDetails(customerId);
+        if (customer) {
+          const { customerName, customerPanNumber, customerAadharNumber, customerAddress } = customer;
+          setFormData((prev) => ({
+            ...prev,
+            customerId,
+            customerName,
+            customerPAN: customerPanNumber,
+            customerADHAAR: customerAadharNumber,
+            customerAddress: `${customerAddress.city}, ${customerAddress.state}, ${customerAddress.country} - ${customerAddress.pincode}`,
+          }));
+        }
+      } catch (err) {
+        setError('Failed to load customer data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (customerId) fetchData();
+  }, [customerId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let updatedData = { ...formData, [name]: value };
+    let updated = { ...formData, [name]: value };
 
-    if (name === 'goldWeight') {
-      const ratePerGram = 8000; // dummy logic
-      updatedData.loanAmount = value * ratePerGram;
+    if (name === 'goldGrams') {
+      const ratePerGram = 8000;
+      const amount = value * ratePerGram;
+      updated.loanAmount = amount;
+      // Calculate dummy EMI (Simple Interest for now)
+      const interest = (amount * updated.interestRate * updated.tenure) / (100 * 12);
+      updated.emi = ((amount + interest) / updated.tenure).toFixed(2);
     }
 
-    setFormData(updatedData);
+    setFormData(updated);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting loan application:', formData);
-    setSubmitted(true);
-
-    setTimeout(() => {
-      setFormData({
-        fullName: '',
-        pan: '',
-        aadhaar: '',
-        mobile: '',
-        address: '',
-        goldWeight: '',
-        loanAmount: '',
-      });
-    }, 3000);
+    try {
+      const res = await applyGoldLoan(formData);
+      if (!res.ok) throw new Error('Failed to submit loan');
+      setSubmitted(true);
+    } catch (err) {
+      setError('Something went wrong while applying for loan.');
+      console.error(err);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="text-center my-5">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
-    <>
-      <Container className="mt-5 mb-5 py-4 px-3" style={{ maxWidth: '650px', backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
-        <h3 className="mb-4 text-center">Gold Loan Application</h3>
+    <Container className="mt-5 mb-5 py-4 px-3" style={{ maxWidth: '700px', backgroundColor: '#f8f9fa', borderRadius: '10px' }}>
+      <h3 className="mb-4 text-center">Gold Loan Application</h3>
 
-        {submitted && (
-          <Alert variant="success" className="text-center">
-            Loan application submitted successfully!
-          </Alert>
-        )}
+      {error && <Alert variant="danger">{error}</Alert>}
+      {submitted && <Alert variant="success">Loan application submitted successfully!</Alert>}
 
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Full Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="fullName"
-              placeholder="Enter your name"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Customer Name</Form.Label>
+          <Form.Control type="text" name="customerName" value={formData.customerName} readOnly />
+        </Form.Group>
 
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>PAN Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="pan"
-                  placeholder="ABCDE1234F"
-                  value={formData.pan}
-                  onChange={handleChange}
-                  required
-                  maxLength={10}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Aadhaar Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="aadhaar"
-                  placeholder="1234 5678 9123"
-                  value={formData.aadhaar}
-                  onChange={handleChange}
-                  required
-                  maxLength={12}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>PAN</Form.Label>
+              <Form.Control type="text" name="customerPAN" value={formData.customerPAN} readOnly />
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Aadhaar</Form.Label>
+              <Form.Control type="text" name="customerADHAAR" value={formData.customerADHAAR} readOnly />
+            </Form.Group>
+          </Col>
+        </Row>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Mobile Number</Form.Label>
-            <Form.Control
-              type="text"
-              name="mobile"
-              placeholder="9876543210"
-              value={formData.mobile}
-              onChange={handleChange}
-              required
-              maxLength={10}
-            />
-          </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Address</Form.Label>
+          <Form.Control as="textarea" rows={2} name="customerAddress" value={formData.customerAddress} readOnly />
+        </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Residential Address</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={2}
-              name="address"
-              placeholder="Your address here"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Gold Weight (grams)</Form.Label>
+              <Form.Control type="number" name="goldGrams" value={formData.goldGrams} onChange={handleChange} required />
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Loan Amount</Form.Label>
+              <Form.Control type="text" name="loanAmount" value={formData.loanAmount} readOnly />
+            </Form.Group>
+          </Col>
+        </Row>
 
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Gold Weight (in grams)</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="goldWeight"
-                  value={formData.goldWeight}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Eligible Loan Amount</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="loanAmount"
-                  value={formData.loanAmount}
-                  readOnly
-                />
-              </Form.Group>
-            </Col>
-          </Row>
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Interest Rate (%)</Form.Label>
+              <Form.Control type="number" name="interestRate" value={formData.interestRate} onChange={handleChange} />
+            </Form.Group>
+          </Col>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Tenure (months)</Form.Label>
+              <Form.Control type="number" name="tenure" value={formData.tenure} onChange={handleChange} />
+            </Form.Group>
+          </Col>
+        </Row>
 
-          <Button variant="primary" type="submit" className="w-100 mb-3">
-            Submit Application
+        <Form.Group className="mb-3">
+          <Form.Label>Estimated EMI</Form.Label>
+          <Form.Control type="text" name="emi" value={formData.emi} readOnly />
+        </Form.Group>
+
+        <Button type="submit" className="w-100">Submit Application</Button>
+      </Form>
+
+      {submitted && (
+        <div className="text-center mt-3">
+          <Button
+            variant="outline-danger"
+            style={{ backgroundColor: '#f8d7da', borderColor: '#f5c2c7', color: '#842029' }}
+            className="w-100"
+            onClick={() => (window.location.href = '/loan/status')}
+          >
+            View Loan Status
           </Button>
-        </Form>
-
-        {submitted && (
-          <div className="text-center">
-            <Button
-              variant="outline-danger"
-              style={{ backgroundColor: '#f8d7da', borderColor: '#f5c2c7', color: '#842029' }}
-              className="w-100 mb-3"
-              onClick={() => (window.location.href = '/loan/status')}
-            >
-              View Status
-            </Button>
-          </div>
-        )}
-      </Container>
-    </>
+        </div>
+      )}
+    </Container>
   );
 };
 
