@@ -5,7 +5,7 @@ import AuthContext from '../../context/AuthContext';
 
 const Profile = () => {
 
-   const { customerId } = useContext(AuthContext);
+   const { customerId, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Profile = () => {
 
   const getProfile = async () => {
     try {
-      const response = await fetch(`https://914f-103-141-55-30.ngrok-free.app/api/customer/${customerId}`, {
+      const response = await fetch(`https://5140-103-141-55-30.ngrok-free.app/api/customer/${customerId}`, {
         method: "GET",
         headers: { 'ngrok-skip-browser-warning': 'true' }
       });
@@ -41,6 +41,7 @@ const Profile = () => {
 
   if (!profile) {
     return (
+      isAuthenticated &&
       <div
         className="d-flex align-items-center justify-content-center"
         style={{
@@ -135,7 +136,7 @@ const Profile = () => {
         <div className="card-footer text-end bg-white" style={{ borderBottomLeftRadius: "22px", borderBottomRightRadius: "22px" }}>
           <button
             className="btn btn-danger px-4"
-            onClick={() => navigate("/login", { replace: true })}
+            onClick={() => {navigate("/login"); setIsAuthenticated(false);}}
           >
             <i className="bi bi-box-arrow-right me-2"></i>
             Logout

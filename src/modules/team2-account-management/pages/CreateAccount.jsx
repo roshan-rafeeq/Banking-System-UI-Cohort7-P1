@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import '../../../css/CreateAccount.css';
 
 function CreateAccount() {
   const location = useLocation();
@@ -14,8 +15,9 @@ function CreateAccount() {
 
   const [branches, setBranches] = useState([]);
   const [accountTypes, setAccountTypes] = useState([]);
+  const [accountCreated, setAccountCreated] = useState(false);
+  const [error, setError] = useState('');
 
-  // Set customer ID and fetch dropdown data
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
@@ -29,16 +31,16 @@ function CreateAccount() {
         setAccountTypes(accountTypeData);
       } catch (error) {
         console.error("Error fetching dropdown data:", error);
+        setError('Failed to load branch or account type data.');
       }
     };
 
     fetchDropdownData();
 
-   const finalCustomerId = customerIdFromState || "CUST_FAKE_9999";
-  setFormData((prev) => ({ ...prev, customer_id: finalCustomerId }));
+    const finalCustomerId = customerIdFromState || "CUST_FAKE_94776";
+    setFormData((prev) => ({ ...prev, customer_id: finalCustomerId }));
   }, [customerIdFromState]);
 
-  // Auto-generate accountId whenever relevant fields change
   useEffect(() => {
     const { branch_id, customer_id, account_type_id } = formData;
     if (branch_id && account_type_id && customer_id) {
@@ -54,6 +56,7 @@ function CreateAccount() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
       const payload = {
         accountId: formData.account_id,
@@ -64,60 +67,89 @@ function CreateAccount() {
         balance: 0
       };
 
-      console.log("Payload being sent to backend:", payload);
-
       const response = await fetch("http://localhost:8080/api/accounts", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify(payload)
       });
 
       if (response.ok) {
-        alert("Account Created Successfully!");
-        setFormData({
-          customer_id: 'CUST123456',
-          account_type_id: '',
-          branch_id: '',
-          account_id: ''
-        });
+        setAccountCreated(true);
       } else {
-        alert("Failed to create account.");
+        setError('Failed to create account.');
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Error occurred while creating account.");
+      setError('An error occurred while creating account.');
+    }
+  };
+
+  const handleGenerateCard = async () => {
+    try {
+      const selectedAccountType = accountTypes.find(
+        (type) => type.typeId === formData.account_type_id
+      );
+      const accountType = selectedAccountType ? selectedAccountType.type : '';
+
+      const queryParams = new URLSearchParams({
+        customerId: formData.customer_id,
+        accountId: formData.account_id,
+        accountType: accountType
+      });
+
+      const url = `https://e3a4-2406-8800-9014-b44f-2d82-4283-91dd-3ee.ngrok-free.app/debit_card/generate?${queryParams.toString()}`;
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "ngrok-skip-browser-warning": "true" }
+      });
+
+      if (response.ok) {
+        alert("Debit Card generated successfully!");
+      } else {
+        alert("Failed to generate debit card.");
+      }
+    } catch (error) {
+      console.error("Error generating card:", error);
+      alert("Error occurred while generating card.");
     }
   };
 
   return (
     <Container className="mt-4">
-      <h2 className="mb-4">Account Creation Form</h2>
-      <Card>
+      <h2 className="mb-4">Create New Account</h2>
+      {error && <Alert variant="danger">{error}</Alert>}
+
+      <Card className="shadow-sm rounded-4 border-0">
         <Card.Body>
           <Form onSubmit={handleSubmit}>
-            <Row>
+            <Row className="gy-3">
+
               <Col md={6}>
-                <Form.Group className="mb-3">
+                <Form.Group>
                   <Form.Label>Customer ID</Form.Label>
                   <Form.Control
                     type="text"
                     name="customer_id"
                     value={formData.customer_id}
                     disabled
+                    className="custom-input"
                   />
                 </Form.Group>
               </Col>
 
               <Col md={6}>
-                <Form.Group className="mb-3">
+                <Form.Group>
                   <Form.Label>Account Type</Form.Label>
                   <Form.Select
                     name="account_type_id"
                     value={formData.account_type_id}
                     onChange={handleChange}
                     required
+                    className="custom-input"
                   >
                     <option value="">Select Account Type</option>
                     {accountTypes.map((type) => (
@@ -130,13 +162,14 @@ function CreateAccount() {
               </Col>
 
               <Col md={6}>
-                <Form.Group className="mb-3">
+                <Form.Group>
                   <Form.Label>Branch</Form.Label>
                   <Form.Select
                     name="branch_id"
                     value={formData.branch_id}
                     onChange={handleChange}
                     required
+                    className="custom-input"
                   >
                     <option value="">Select Branch</option>
                     {branches.map((b) => (
@@ -149,21 +182,32 @@ function CreateAccount() {
               </Col>
 
               <Col md={6}>
-                <Form.Group className="mb-3">
+                <Form.Group>
                   <Form.Label>Generated Account ID</Form.Label>
                   <Form.Control
                     type="text"
                     name="account_id"
                     value={formData.account_id}
                     readOnly
+                    className="custom-input"
                   />
                 </Form.Group>
               </Col>
-            </Row>
 
-            <Button variant="primary" type="submit">
-              Create Account
-            </Button>
+              <Col xs={12}>
+                <Button type="submit" variant="primary" className="rounded-3 px-4">
+                  Create Account
+                </Button>
+              </Col>
+
+              {accountCreated && (
+                <Col xs={12}>
+                  <Button variant="success" onClick={handleGenerateCard} className="rounded-3 px-4">
+                    Generate Debit Card
+                  </Button>
+                </Col>
+              )}
+            </Row>
           </Form>
         </Card.Body>
       </Card>
