@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchLoanById } from '../services/loanService.js';
+// import { fetchLoanById } from '../services/loanService.js';
 import { Container, Spinner, Alert, Card } from 'react-bootstrap';
 import AppNavbar from '../../../components/Navbar';
 
