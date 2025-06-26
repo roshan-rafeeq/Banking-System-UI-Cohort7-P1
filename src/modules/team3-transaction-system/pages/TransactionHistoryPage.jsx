@@ -32,7 +32,9 @@ function TransactionHistoryPage() {
       const js = await response.json();
       console.log("Responseeeeeeeee:" + response);
 
-      setTransactions(js);
+      //setTransactions(js);
+      setTransactions(js.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
+
       console.log("Transactions fetched successfully:", js);
 
 
