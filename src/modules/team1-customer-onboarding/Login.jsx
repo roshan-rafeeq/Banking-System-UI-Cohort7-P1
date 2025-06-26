@@ -16,7 +16,7 @@ const Login = () => {
     }
     const submit = async (e) => {
         e.preventDefault();
-        const response = await fetch("https://5140-103-141-55-30.ngrok-free.app/api/customer/authenticate",
+        const response = await fetch("https://spider-fond-buck.ngrok-free.app/api/customer/authenticate",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

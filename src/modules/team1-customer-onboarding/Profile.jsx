@@ -14,7 +14,7 @@ const Profile = () => {
 
   const getProfile = async () => {
     try {
-      const response = await fetch(`https://5140-103-141-55-30.ngrok-free.app/api/customer/${customerId}`, {
+      const response = await fetch(`https://spider-fond-buck.ngrok-free.app/api/customer/${customerId}`, {
         method: "GET",
         headers: { 'ngrok-skip-browser-warning': 'true' }
       });
