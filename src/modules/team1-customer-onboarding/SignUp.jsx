@@ -109,7 +109,7 @@ const SignUp = () => {
                         </div>
                         {/* Right: Form */}
                         <div className="col-md-7 p-5">
-                            <h2 className="mb-2 fw-bold" style={{ color: "#2d3a4b" }}>Create Your Account</h2>
+                            <h2 className="mb-2 fw-bold" style={{ color: "#2d3a4b" }}>Open Your Account</h2>
                             <p className="text-muted mb-4" style={{ fontSize: "1.1rem" }}>Join our bank and manage your finances with ease.</p>
                             <form onSubmit={submit}>
                                 <div className="row">
@@ -120,7 +120,7 @@ const SignUp = () => {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="number" className="form-control form-control-lg" id="customerPhone" name="customerPhone" placeholder="Phone Number" required maxLength={10} pattern="\d{10}" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerPhone" name="customerPhone" placeholder="Phone Number" required maxLength={10} minLength={10} pattern="\d{10}" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
@@ -175,7 +175,7 @@ const SignUp = () => {
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="customerAadharNumber" name="customerAadharNumber" placeholder="Aadhar Number" required onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerAadharNumber" name="customerAadharNumber" placeholder="Aadhar Number" required maxLength={12} minLength={10} pattern="\d{12}" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     {/* Gender - full width */}
