@@ -5,7 +5,7 @@ import '../../../css/CreateAccount.css';
 
 function CreateAccount() {
   const { customerId } = useContext(AuthContext);
-  const finalCustomerId = customerId || "CUST_FAKE_93776";
+  const finalCustomerId = customerId || "CUST_FAKE_73776";
   const [formData, setFormData] = useState({
     customer_id: '',
     account_type_id: '',
@@ -81,8 +81,10 @@ function CreateAccount() {
 
       if (response.ok) {
         setAccountCreated(true);
+         alert("Account Created successfully!");
       } else {
         setError('Failed to create account.');
+        alert("Failed to Create Account.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -103,7 +105,7 @@ function CreateAccount() {
         accountType: accountType
       });
 
-      const url = `https://e3a4-2406-8800-9014-b44f-2d82-4283-91dd-3ee.ngrok-free.app/debit_card/generate?${queryParams.toString()}`;
+      const url = `https://singular-current-marten.ngrok-free.app/debit_card/generate?${queryParams.toString()}`;
 
       const response = await fetch(url, {
         method: "POST",

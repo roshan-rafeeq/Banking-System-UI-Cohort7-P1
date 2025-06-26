@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Table, Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext'; // Make sure this path is correct
 
 function ComplaintAdmin() {
   const [complaints, setComplaints] = useState([]);
@@ -8,13 +9,17 @@ function ComplaintAdmin() {
   const [errorMsg, setErrorMsg] = useState('');
   const location = useLocation();
 
+  const { customerId } = useContext(AuthContext); // ✅ Accessing customerId
+  console.log("Logged-in Customer ID:", customerId);
+
+  // Get filter values (name & phone) from route state
   const filterName = location.state?.filterName?.toLowerCase() || '';
   const filterPhone = location.state?.filterPhone?.toLowerCase() || '';
 
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        const response = await fetch('https://43c2-103-141-55-30.ngrok-free.app/api/complaints', {
+        const response = await fetch('https://6555-103-141-55-30.ngrok-free.app/api/complaints', {
           headers: {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': 'true',
@@ -38,7 +43,7 @@ function ComplaintAdmin() {
     fetchComplaints();
   }, []);
 
-  // 🔍 Apply filtering
+  // 🔍 Filter complaints by name and phone
   const filteredComplaints = complaints.filter((item) => {
     const nameMatch = item.name?.toLowerCase().includes(filterName);
     const phoneMatch = item.phone?.toLowerCase().includes(filterPhone);
@@ -70,6 +75,7 @@ function ComplaintAdmin() {
                   <th>Complaint Type</th>
                   <th>Details</th>
                   <th>Status</th>
+                  <th>Customer ID</th> {/* ✅ Display customer ID */}
                 </tr>
               </thead>
               <tbody>
@@ -82,13 +88,43 @@ function ComplaintAdmin() {
                       <td>{item.type || item.category}</td>
                       <td>{(item.complaint || item.description || '').slice(0, 60)}...</td>
                       <td>
-                        <span className="badge bg-warning text-dark">Pending</span>
+                        <select
+                          className="form-select"
+                          defaultValue={item.status || "Pending"}
+                          style={{ padding: '5px 10px', borderRadius: '5px' }}
+                          onChange={async (e) => {
+                            const newStatus = e.target.value;
+                            try {
+                              const response = await fetch(`https://43c2-103-141-55-30.ngrok-free.app/api/complaints/${item.id}`, {
+                                method: 'PUT',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                  'ngrok-skip-browser-warning': 'true',
+                                },
+                                body: JSON.stringify({ status: newStatus }),
+                              });
+
+                              if (response.ok) {
+                                alert('Status updated successfully');
+                              }
+                            } catch (err) {
+                              console.error('Update error:', err);
+                              alert('Status update failed');
+                            }
+                          }}
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Approved">Resolved</option>
+                        </select>
                       </td>
+                      <td>{item.customerId || customerId || 'N/A'}</td> {/* ✅ Display each item's customerId */}
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="text-center text-muted">No complaints found for this name and phone.</td>
+                    <td colSpan="7" className="text-center text-muted">
+                      No complaints found for this name and phone.
+                    </td>
                   </tr>
                 )}
               </tbody>

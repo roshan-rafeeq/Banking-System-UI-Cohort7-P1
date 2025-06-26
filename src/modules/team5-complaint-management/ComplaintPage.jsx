@@ -1,11 +1,17 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import AuthContext from '../../context/AuthContext';
 
 function ComplaintPage() {
+
+  const { customerId } = useContext(AuthContext);
+  console.log(customerId);
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -18,7 +24,7 @@ function ComplaintPage() {
       complaint: form.formComplaint.value,
     };
 
-    fetch('https://43c2-103-141-55-30.ngrok-free.app/api/complaints', {
+    fetch('https://6555-103-141-55-30.ngrok-free.app/api/complaints', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -60,7 +66,7 @@ function ComplaintPage() {
               boxShadow: '0 6px 15px rgba(0,0,0,0.1)',
             }}
           />
-          <div
+          {/* <div
             style={{
               backgroundColor: '#E2EFFB',
               color: '#1F3C88',
@@ -72,8 +78,8 @@ function ComplaintPage() {
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.07)',
             }}
           >
-            🤝 Need Assistance? Submit your complaint below.
-          </div>
+            🤝 Need Assistance? Submit your complaint.
+          </div> */}
         </Col>
 
         {/* RIGHT SIDE FORM */}
