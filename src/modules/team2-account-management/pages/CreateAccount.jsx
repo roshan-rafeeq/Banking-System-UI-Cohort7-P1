@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import AuthContext from '../../../context/AuthContext';
 import '../../../css/CreateAccount.css';
 
 function CreateAccount() {
-  const location = useLocation();
-  const customerIdFromState = location.state;
+  const { customerId } = useContext(AuthContext);
+  const finalCustomerId = customerId || "CUST_FAKE_93776";
   const [formData, setFormData] = useState({
     customer_id: '',
     account_type_id: '',
@@ -21,9 +21,13 @@ function CreateAccount() {
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
-        const branchRes = await fetch("http://localhost:8080/api/branches");
-        const accountTypeRes = await fetch("http://localhost:8080/api/account-types");
+        const branchRes = await fetch("https://tadpole-closing-prawn.ngrok-free.app/api/branches", {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
 
+    const accountTypeRes = await fetch("https://tadpole-closing-prawn.ngrok-free.app/api/account-types", {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
         const branchData = await branchRes.json();
         const accountTypeData = await accountTypeRes.json();
 
@@ -37,9 +41,8 @@ function CreateAccount() {
 
     fetchDropdownData();
 
-    const finalCustomerId = customerIdFromState || "CUST_FAKE_94776";
     setFormData((prev) => ({ ...prev, customer_id: finalCustomerId }));
-  }, [customerIdFromState]);
+  }, [customerId]);
 
   useEffect(() => {
     const { branch_id, customer_id, account_type_id } = formData;
@@ -67,7 +70,7 @@ function CreateAccount() {
         balance: 0
       };
 
-      const response = await fetch("http://localhost:8080/api/accounts", {
+      const response = await fetch("https://tadpole-closing-prawn.ngrok-free.app/api/accounts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

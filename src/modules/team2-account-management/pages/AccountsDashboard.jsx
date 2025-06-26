@@ -14,7 +14,7 @@ function AccountsDashboard() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/accounts', {
+      .get('https://tadpole-closing-prawn.ngrok-free.app/api/accounts', {
         headers: {
           'ngrok-skip-browser-warning': 'true',
         },
