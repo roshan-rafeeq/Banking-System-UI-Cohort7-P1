@@ -16,7 +16,7 @@ const Login = () => {
     }
     const submit = async (e) => {
         e.preventDefault();
-        const response = await fetch("https://914f-103-141-55-30.ngrok-free.app/api/customer/authenticate",
+        const response = await fetch("https://5140-103-141-55-30.ngrok-free.app/api/customer/authenticate",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -32,9 +32,7 @@ const Login = () => {
             setIsAuthenticated(true);
             setTimeout(() => {
                 setShowAlert(false);
-                navigate("/profile", {
-                    state: responseJson.customerId
-                });
+                navigate("/profile");
             }, 1500);
         }
 

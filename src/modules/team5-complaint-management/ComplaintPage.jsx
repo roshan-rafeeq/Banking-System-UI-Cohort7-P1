@@ -18,7 +18,7 @@ function ComplaintPage() {
       complaint: form.formComplaint.value,
     };
 
-    fetch('https://7089-103-233-64-100.ngrok-free.app/api/complaints', {
+    fetch('https://43c2-103-141-55-30.ngrok-free.app/api/complaints', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
