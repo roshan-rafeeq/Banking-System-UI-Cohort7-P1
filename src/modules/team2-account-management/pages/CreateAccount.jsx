@@ -10,7 +10,6 @@ function CreateAccount() {
     customer_id: '',
     account_type_id: '',
     branch_id: '',
-    account_id: '',
   });
 
   const [branches, setBranches] = useState([]);
@@ -44,13 +43,13 @@ function CreateAccount() {
     setFormData((prev) => ({ ...prev, customer_id: finalCustomerId }));
   }, [customerId]);
 
-  useEffect(() => {
-    const { branch_id, customer_id, account_type_id } = formData;
-    if (branch_id && account_type_id && customer_id) {
-      const newAccountId = `${branch_id}-${customer_id}-${account_type_id}`;
-      setFormData((prev) => ({ ...prev, account_id: newAccountId }));
-    }
-  }, [formData.branch_id, formData.account_type_id, formData.customer_id]);
+  // useEffect(() => {
+  //   const { branch_id, customer_id, account_type_id } = formData;
+  //   if (branch_id && account_type_id && customer_id) {
+  //     const newAccountId = `${branch_id}-${customer_id}-${account_type_id}`;
+  //     setFormData((prev) => ({ ...prev, account_id: newAccountId }));
+  //   }
+  // }, [formData.branch_id, formData.account_type_id, formData.customer_id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,14 +61,13 @@ function CreateAccount() {
     setError('');
     try {
       const payload = {
-        accountId: formData.account_id,
+        
         customerId: formData.customer_id,
-        accountTypeId: formData.account_type_id,
         branchId: formData.branch_id,
-        status: 'ACTIVE',
-        balance: 0
+        accountTypeId:formData.account_type_id,
+        
       };
-
+      console.log(payload)
       const response = await fetch("https://tadpole-closing-prawn.ngrok-free.app/api/accounts", {
         method: "POST",
         headers: {
@@ -186,18 +184,7 @@ function CreateAccount() {
                 </Form.Group>
               </Col>
 
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>Generated Account ID</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="account_id"
-                    value={formData.account_id}
-                    readOnly
-                    className="custom-input"
-                  />
-                </Form.Group>
-              </Col>
+              
 
               <Col xs={12}>
                 <Button type="submit" variant="primary" className="rounded-3 px-4">
