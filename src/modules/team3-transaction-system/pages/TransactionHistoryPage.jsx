@@ -10,12 +10,38 @@ function TransactionHistoryPage() {
   }, []);
 
   const fetchTransactions = async () => {
+    // try {
+    //   const response = await getTransactionHistory();
+    //   setTransactions(response.data);
+    //   console.log("Transactions fetched successfully:", response.data);
+
+    // } catch (err) {
+    //   console.error("Failed to fetch transactions:", err);
+    // }
+    console.log("Fetching transactions from API...");
+
     try {
-      const response = await getTransactionHistory();
-      setTransactions(response.data);
-    } catch (err) {
-      console.error("Failed to fetch transactions:", err);
+      const response = await fetch(`https://many-shark-kind.ngrok-free.app/api/transactions/history/0001-CUST9877-002`, {
+        method: "GET",
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+      });
+
+      console.log("**********************");
+      console.log(response);
+
+      const js = await response.json();
+      console.log("Responseeeeeeeee:" + response);
+
+      setTransactions(js);
+      console.log("Transactions fetched successfully:", js);
+
+
+
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      alert("Failed to load profile.");
     }
+
   };
 
   return (
@@ -33,22 +59,34 @@ function TransactionHistoryPage() {
           </tr>
         </thead>
         <tbody>
-          {transactions.length === 0 ? (
+          {
+            transactions.map((transaction) => (
+              <tr key={transaction.id}>
+                <td>{transaction.id}</td>
+                <td>₹{transaction.amount}</td>
+                <td>{transaction.status}</td>
+                <td>{transaction.senderAccount}</td>
+                <td>{transaction.receiverAccount}</td>
+                <td>{transaction.timestamp}</td>
+              </tr>
+            ))    
+          }
+          {/* {transactions.length === 0 ? (
             <tr>
               <td colSpan="6">No transactions found.</td>
             </tr>
           ) : (
-            transactions.map((txn) => (
-              <tr key={txn.id}>
-                <td>{txn.id}</td>
-                <td>₹{txn.amount}</td>
-                <td>{txn.status}</td>
-                <td>{txn.senderAccount}</td>
-                <td>{txn.receiverAccount}</td>
-                <td>{txn.timestamp}</td>
-              </tr>
-            ))
-          )}
+            // transactions.map((transactions) => (
+            <tr key={transactions.id}>
+              <td>{transactions.id}</td>
+              <td>₹{transactions.amount}</td>
+              <td>{transactions.status}</td>
+              <td>{transactions.senderAccount}</td>
+              <td>{transactions.receiverAccount}</td>
+              <td>{transactions.timestamp}</td>
+            </tr>
+            // ))
+          )} */}
         </tbody>
       </table>
     </div>
