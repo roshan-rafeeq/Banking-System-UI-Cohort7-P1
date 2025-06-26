@@ -28,7 +28,8 @@ const Login = () => {
             const responseJson = await response.json();
             setShowAlert(true);
             console.log(responseJson.customerId);
-            setCustomerId(responseJson.customerId)
+            setCustomerId(responseJson.customerId);
+            localStorage.setItem("customerId", responseJson.customerId);
             setIsAuthenticated(true);
             setTimeout(() => {
                 setShowAlert(false);

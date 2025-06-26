@@ -5,9 +5,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useLocation } from 'react-router-dom';
 import '../css/NavBar.css';
+import AuthContext from '../context/AuthContext';
+import { useContext } from 'react';
 
 function NavBar() {
   const location = useLocation();
+  const { isAuthenticated } = useContext(AuthContext);
 
   const isActive = (path) => location.pathname.startsWith(path);
   const isExact = (path) => location.pathname === path;
@@ -25,18 +28,18 @@ function NavBar() {
         <Navbar.Collapse id="navbarScroll" className="d-flex justify-content-between w-100">
 
           <Nav className="mx-auto my-2 my-lg-0" navbarScroll>
-            <Nav.Link href="/accounts" className={isActive('/accounts') ? 'active' : ''}>
+            <Nav.Link href="/accounts" className={`${localStorage.getItem("customerId") ? " ": "d-none"} ${isActive('/accounts') ? 'active' : ''}`}>
               Accounts
             </Nav.Link>
 
-            <Nav.Link href="/transfer" className={isActive('/transfer') ? 'active' : ''}>
+            <Nav.Link href="/transfer" className={`${localStorage.getItem("customerId") ? " ": "d-none"} ${isActive('/transfer') ? 'active' : ''}`}>
               Transfer
             </Nav.Link>
 
             <NavDropdown
               title="Loan"
               id="loan-nav-dropdown"
-              className={isDropdownActive('/loan') ? 'dropdown-active' : ''}
+              className={`${localStorage.getItem("customerId") ? " ": "d-none"} ${isDropdownActive('/loan') ? 'dropdown-active' : ''}`}
             >
               <NavDropdown.Item
                 href="/loan"
@@ -55,7 +58,7 @@ function NavBar() {
             <NavDropdown
               title="Complaint"
               id="complaint-nav-dropdown"
-              className={isDropdownActive('/complaint') ? 'dropdown-active' : ''}
+              className={` ${localStorage.getItem("customerId") ? " ": "d-none"} ${isDropdownActive('/complaint') ? 'dropdown-active' : ''}`}
             >
               <NavDropdown.Item
                 href="/complaint"
@@ -77,19 +80,22 @@ function NavBar() {
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link href="/debit" className={isActive('/debit') ? 'active' : ''}>
+            <Nav.Link href="/debit"className={`${localStorage.getItem("customerId") ? " ": "d-none"} ${isActive('/debit') ? 'active' : ''}`}>
               Debit Cards
+            </Nav.Link>
+            <Nav.Link href="/profile" className={`${isActive('/profile') ? 'active' : ''} ${localStorage.getItem("customerId") ? "" : "d-none"} `}>
+              Profile
             </Nav.Link>
           </Nav>
 
           <div className="d-flex gap-2">
             {location.pathname !== '/profile' && location.pathname !== '/login' && (
-              <Button variant="outline-light" href="/login">
+              <Button className={`${localStorage.getItem("customerId") ? "d-none" : ""} `} variant="outline-light" href="/login">
                 Login
               </Button>
             )}
             {location.pathname !== '/profile' && location.pathname !== '/register' && (
-              <Button variant="light" href="/register">
+              <Button className={`${localStorage.getItem("customerId") ? "d-none" : ""} `} variant="light" href="/register">
                 Register
               </Button>
             )}
