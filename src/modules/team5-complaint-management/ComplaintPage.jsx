@@ -66,7 +66,7 @@ function ComplaintPage() {
               boxShadow: '0 6px 15px rgba(0,0,0,0.1)',
             }}
           />
-          <div
+          {/* <div
             style={{
               backgroundColor: '#E2EFFB',
               color: '#1F3C88',
@@ -79,7 +79,7 @@ function ComplaintPage() {
             }}
           >
             🤝 Need Assistance? Submit your complaint.
-          </div>
+          </div> */}
         </Col>
 
         {/* RIGHT SIDE FORM */}
