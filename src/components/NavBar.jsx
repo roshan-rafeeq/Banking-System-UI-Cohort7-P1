@@ -4,8 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useLocation } from 'react-router-dom';
 
 function NavBar() {
+  const location = useLocation();
   return (
     <Navbar expand="lg" className=" navbar-dark py-3 px-4">
       <Container fluid>
@@ -27,26 +29,26 @@ function NavBar() {
             navbarScroll
           >
 
-            <Nav.Link href="/accounts">Accounts</Nav.Link>
-            <Nav.Link href="/transfer">Transfer</Nav.Link>
+            <Nav.Link className={`${location.pathname === "/register" || location.pathname ==="/login"? "d-none": ""}`} href="/accounts">Accounts</Nav.Link>
+            <Nav.Link className={`${location.pathname === "/register" || location.pathname ==="/login"? "d-none": ""}`} href="/transfer">Transfer</Nav.Link>
             {/* <Nav.Link href="/loan">Loan</Nav.Link> */}
-            <NavDropdown title="Loan" id="standard-nav-dropdown">
+            <NavDropdown className={`${location.pathname === "/register" || location.pathname ==="/login"? "d-none": ""}`} title="Loan" id="standard-nav-dropdown">
               <NavDropdown.Item href='/loan'>Loan Type</NavDropdown.Item>
               <NavDropdown.Item href='/loan/status'>Loan Status</NavDropdown.Item>
             </NavDropdown>
 
-             <NavDropdown title="Complaint " id="basic-nav-dropdown">
+             <NavDropdown className={`${location.pathname === "/register" || location.pathname ==="/login"? "d-none": ""}`} title="Complaint " id="basic-nav-dropdown">
               <NavDropdown.Item href="/complaint">Complaint Register</NavDropdown.Item>
               <NavDropdown.Item href="/complaint/status">
                 Complaint Status
               </NavDropdown.Item>
               <NavDropdown.Item href="/complaint/admin">Complaint View</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/debit">Debit Cards</Nav.Link>
+            <Nav.Link className={`${location.pathname === "/register" || location.pathname ==="/login"? "d-none": ""}`} href="/debit">Debit Cards</Nav.Link>
           </Nav>
            <div className="d-flex gap-2">
-            <Button variant="outline-light" href="/login">Login</Button>
-            <Button variant="light" href="/register">Register</Button>
+            <Button className={`${location.pathname ==="/profile" || location.pathname==="/login" ? 'd-none':""}`} variant="outline-light" href="/login">Login</Button>
+            <Button className={`${(location.pathname === "/profile" || location.pathname==="/register")? 'd-none':""}`} variant="light" href="/register">Register</Button>
           </div>
         </Navbar.Collapse>
       </Container>

@@ -82,7 +82,7 @@ const GoldLoanApply = () => {
     let updatedData = { ...formData, [name]: value };
 
     if (name === 'goldWeight') {
-      const ratePerGram = 7000; // dummy logic
+      const ratePerGram = 8000; // dummy logic
       updatedData.loanAmount = value * ratePerGram;
     }
 

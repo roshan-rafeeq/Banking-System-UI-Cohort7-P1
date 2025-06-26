@@ -1,27 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useContext }  from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alert from './Alert'
-
+import AuthContext from '../../context/AuthContext'
 const Login = () => {
+
+    const { setCustomerId, setIsAuthenticated } = useContext(AuthContext);
+
+
+
     const [credentials, setCredentials] = useState({ customerPhone: "", password: "" })
     const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
     const onchange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     }
-    const submit =async (e) => {
+    const submit = async (e) => {
         e.preventDefault();
-        const response = await fetch("https://b96b-103-141-55-30.ngrok-free.app/api/customer/authenticate",
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ customerPhone: credentials.customerPhone, password: credentials.password })
-        });
-        setShowAlert(true);
-        setTimeout(() => {
-            setShowAlert(false);
-            navigate("/profile");
-        }, 1500);
+        const response = await fetch("https://914f-103-141-55-30.ngrok-free.app/api/customer/authenticate",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ customerPhone: credentials.customerPhone, password: credentials.password })
+            });
+        if (!response.ok) {
+            alert("invalid credentials");
+        } else {
+            const responseJson = await response.json();
+            setShowAlert(true);
+            console.log(responseJson.customerId);
+            setCustomerId(responseJson.customerId)
+            setIsAuthenticated(true);
+            setTimeout(() => {
+                setShowAlert(false);
+                navigate("/profile", {
+                    state: responseJson.customerId
+                });
+            }, 1500);
+        }
+
     }
     return (
         <>
@@ -58,6 +74,7 @@ const Login = () => {
                                         placeholder="Phone Number"
                                         onChange={onchange}
                                         style={{ borderRadius: "10px" }}
+                                        required
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -69,6 +86,7 @@ const Login = () => {
                                         placeholder="Password"
                                         onChange={onchange}
                                         style={{ borderRadius: "10px" }}
+                                        required
                                     />
                                 </div>
                                 <button

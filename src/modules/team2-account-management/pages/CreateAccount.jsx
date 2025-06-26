@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
 function CreateAccount() {
+  const location = useLocation();
+  const customerIdFromState = location.state;
   const [formData, setFormData] = useState({
     customer_id: '',
     account_type_id: '',
@@ -31,9 +34,9 @@ function CreateAccount() {
 
     fetchDropdownData();
 
-    const fakeCustomerId = "CUST9876";
-    setFormData((prev) => ({ ...prev, customer_id: fakeCustomerId }));
-  }, []);
+   const finalCustomerId = customerIdFromState || "CUST_FAKE_9999";
+  setFormData((prev) => ({ ...prev, customer_id: finalCustomerId }));
+  }, [customerIdFromState]);
 
   // Auto-generate accountId whenever relevant fields change
   useEffect(() => {

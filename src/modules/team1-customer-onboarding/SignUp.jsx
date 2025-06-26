@@ -32,6 +32,7 @@ const SignUp = () => {
     }
     const handleGenderChange = (e) => {
         setGender(e.target.value)
+        setCredentials({ ...credentials, customerGender: e.target.value });
     }
     const submit = async (e) => {
         e.preventDefault();
@@ -51,7 +52,7 @@ const SignUp = () => {
             customerPanNumber,
             password,
             customerAadharNumber } = credentials
-        const response = await fetch("https://b96b-103-141-55-30.ngrok-free.app/api/customer/signUp",
+        const response = await fetch("https://914f-103-141-55-30.ngrok-free.app/api/customer/signUp",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -62,7 +63,7 @@ const SignUp = () => {
                     customerGender,
                     customerEmail,
                     customerPhone,
-                    CustomerAddress :{ 
+                    customerAddress :{ 
                         city,
                         state,
                         country,
@@ -114,67 +115,67 @@ const SignUp = () => {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="customerName" name="customerName" placeholder="Full Name" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerName" name="customerName" placeholder="Full Name" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="number" className="form-control form-control-lg" id="customerPhone" name="customerPhone" placeholder="Phone Number" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="number" className="form-control form-control-lg" id="customerPhone" name="customerPhone" placeholder="Phone Number" required maxLength={10} pattern="\d{10}" onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="city" name="city" placeholder="City" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="city" name="city" placeholder="City" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="state" name="state" placeholder="State" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="state" name="state" placeholder="State" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="country" name="country" placeholder="Country" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="country" name="country" placeholder="Country" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="pincode" name="pincode" placeholder="Pincode" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="pincode" name="pincode" placeholder="Pincode" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="email" className="form-control form-control-lg" id="customerEmail" name="customerEmail" placeholder="Gmail" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="email" className="form-control form-control-lg" id="customerEmail" name="customerEmail" placeholder="Email" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="password" className="form-control form-control-lg" id="password" name="password" placeholder="Password" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="password" className="form-control form-control-lg" id="password" name="password" placeholder="Password" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="customerIncome" name="customerIncome" placeholder="Income" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerIncome" name="customerIncome" placeholder="Income" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="nationality" name="nationality" placeholder="Nationality" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="nationality" name="nationality" placeholder="Nationality" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="date" className="form-control form-control-lg" id="customerDOB" name="customerDOB" placeholder="Date of Birth" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="date" className="form-control form-control-lg" id="customerDOB" name="customerDOB" placeholder="Date of Birth" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="customerPanNumber" name="customerPanNumber" placeholder="Pan Card" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerPanNumber" name="customerPanNumber" placeholder="Pan Card" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="mb-3">
-                                            <input type="text" className="form-control form-control-lg" id="customerAadharNumber" name="customerAadharNumber" placeholder="Aadhar Number" onChange={onchange} style={{ borderRadius: "10px" }} />
+                                            <input type="text" className="form-control form-control-lg" id="customerAadharNumber" name="customerAadharNumber" placeholder="Aadhar Number" required onChange={onchange} style={{ borderRadius: "10px" }} />
                                         </div>
                                     </div>
                                     {/* Gender - full width */}
