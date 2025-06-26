@@ -23,7 +23,7 @@ const LoanTypes = () => {
       title: 'Home Loan',
       description: 'Loan secured against Home with low interest.',
       image: 'https://cdn-icons-png.flaticon.com/512/619/619032.png',
-      route: 'property'
+      route: 'home'
     }
   ];
 

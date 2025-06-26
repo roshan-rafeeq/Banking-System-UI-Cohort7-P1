@@ -8,7 +8,7 @@ const GoldLoanCalculator = () => {
   const navigate = useNavigate();
 
   const calculateLoan = () => {
-    const ratePerGram = 7000; // dummy rate
+    const ratePerGram = 8000; // dummy rate
     setAmount(weight * ratePerGram);
   };
 

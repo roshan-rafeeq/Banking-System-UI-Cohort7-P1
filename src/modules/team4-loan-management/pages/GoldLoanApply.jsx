@@ -10,6 +10,8 @@ const GoldLoanApply = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  console.log("Customer id inside Goldloanapply: ",customerId);
+  
   const [formData, setFormData] = useState({
     customerId: '',
     customerName: '',
@@ -22,7 +24,7 @@ const GoldLoanApply = () => {
     tenure: 12,          // Dummy in months
     emi: 0,
     type: 'Gold Loan',
-    status: 'Pending',
+    status: 'Approved',
   });
 
   // Fetch & prefill data

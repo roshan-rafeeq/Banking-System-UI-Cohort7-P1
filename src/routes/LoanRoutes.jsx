@@ -6,6 +6,8 @@ import LoanStatus from '../modules/team4-loan-management/pages/LoanStatus';
 import LoanDetails from '../modules/team4-loan-management/pages/LoanDetails';
 import PersonalLoanCalculator from '../modules/team4-loan-management/pages/PersonalLoanCalculator';
 import PersonalLoanApply from '../modules/team4-loan-management/pages/PersonalLoanApply';
+import HomeLoanApply from '../modules/team4-loan-management/pages/HomeLoanApply';
+import HomeLoanCalculator from '../modules/team4-loan-management/pages/HomeLoanCalculator';
 
 
 const LoanRoutes = () => {
@@ -18,6 +20,8 @@ const LoanRoutes = () => {
       <Route path="status/:loanId" element={<LoanDetails />} />
       <Route path="personal" element={<PersonalLoanCalculator />} />
       <Route path="personal/apply" element={<PersonalLoanApply/>} />
+      <Route path="home" element={<HomeLoanCalculator/>} />
+      <Route path="home/apply" element={<HomeLoanApply/>} />
 
 
     </Routes>
