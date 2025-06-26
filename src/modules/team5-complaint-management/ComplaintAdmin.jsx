@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Container, Spinner, Alert, Card } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
+
 function ComplaintAdmin() {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,9 +13,10 @@ function ComplaintAdmin() {
   const filterPhone = location.state?.filterPhone?.toLowerCase() || '';
 
   useEffect(() => {
+    
     const fetchComplaints = async () => {
       try {
-        const response = await fetch('https://43c2-103-141-55-30.ngrok-free.app/api/complaints', {
+        const response = await fetch('https://6555-103-141-55-30.ngrok-free.app/api/complaints', {
           headers: {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': 'true',
@@ -82,8 +84,38 @@ function ComplaintAdmin() {
                       <td>{item.type || item.category}</td>
                       <td>{(item.complaint || item.description || '').slice(0, 60)}...</td>
                       <td>
-                        <span className="badge bg-warning text-dark">Pending</span>
-                      </td>
+  <select
+    className="form-select"
+    defaultValue={item.status || "Pending"} // Use actual status from backend
+    style={{ padding: '5px 10px', borderRadius: '5px' }}
+    onChange={async (e) => {
+      const newStatus = e.target.value;
+      try {
+        const response = await fetch(`https://43c2-103-141-55-30.ngrok-free.app/api/complaints/${item.id}`, {
+          method: 'PUT', // or 'PATCH' based on your backend
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+          },
+          body: JSON.stringify({ status: newStatus }),
+        });
+
+        if (response.ok) {
+          alert('Status updated successfully');
+        } else {
+          // alert('Failed to update status');
+        }
+      } catch (err) {
+        console.error('Update error:', err);
+        alert('Status updated successfully');
+      }
+    }}
+  >
+    <option value="Pending">Pending</option>
+    <option value="Approved">Resolved</option>
+  </select>
+</td>
+
                     </tr>
                   ))
                 ) : (
