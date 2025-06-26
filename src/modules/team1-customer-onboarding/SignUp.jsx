@@ -52,7 +52,7 @@ const SignUp = () => {
             customerPanNumber,
             password,
             customerAadharNumber } = credentials
-        const response = await fetch("https://914f-103-141-55-30.ngrok-free.app/api/customer/signUp",
+        const response = await fetch("https://5140-103-141-55-30.ngrok-free.app/api/customer/signUp",
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
