@@ -98,7 +98,7 @@ function ComplaintStatus() {
       </div>
 
       {/* Email Contact Option */}
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      {/* <div style={{ textAlign: 'center', marginTop: '20px' }}>
         <p style={{ marginBottom: '8px' }}>Need help or have questions?</p>
         <a
           href="mailto:support@example.com?subject=Complaint%20Status%20Inquiry"
@@ -113,7 +113,7 @@ function ComplaintStatus() {
         >
           📧 Email Us
         </a>
-      </div>
+      </div> */}
 
       {/* Keyframes injected via style tag */}
       <style>

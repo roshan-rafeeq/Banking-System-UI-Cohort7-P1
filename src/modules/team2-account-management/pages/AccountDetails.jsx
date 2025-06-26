@@ -14,7 +14,7 @@ function AccountDetails() {
 
   useEffect(() => {
     // Fetch account details
-    axios.get(`http://localhost:8080/api/accounts/${accountId}`, {
+    axios.get(`https://tadpole-closing-prawn.ngrok-free.app/api/accounts/${accountId}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' }
     })
       .then((res) => {
@@ -27,7 +27,11 @@ function AccountDetails() {
       });
 
     // Fetch ledger entries
-    axios.get(`http://localhost:8080/api/ledger/account/${accountId}`)
+    axios.get(`https://tadpole-closing-prawn.ngrok-free.app/api/ledger/account/${accountId}`,
+         {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    }
+    )
       .then((res) => setLedgerEntries(res.data))
       .catch((err) => console.error('Failed to load ledger entries', err));
   }, [accountId]);
