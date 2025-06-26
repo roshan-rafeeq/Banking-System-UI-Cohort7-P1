@@ -20,7 +20,7 @@ const GoldLoanApply = () => {
     customerAddress: '',
     goldGrams: '',
     loanAmount: '',
-    interestRate: 7.5,   // Dummy rate
+    interestRate: '7.5',   // Dummy rate
     tenure: 12,
     type: 'Gold Loan',
   });

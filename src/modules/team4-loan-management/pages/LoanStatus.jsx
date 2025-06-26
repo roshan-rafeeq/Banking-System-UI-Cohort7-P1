@@ -13,7 +13,7 @@ const LoanStatus = () => {
     // Fetch data from the API
     const fetchLoans = async () => {
       try {
-        const response = await fetch('https://6c01-103-141-55-30.ngrok-free.app/goldLoan/all', {
+        const response = await fetch('https://tidy-gibbon-typically.ngrok-free.app/loans/goldLoan/all', {
           method: "GET",
           headers: { 'ngrok-skip-browser-warning': 'true' }
         });
@@ -36,7 +36,7 @@ const LoanStatus = () => {
   return (
     <>
       <Container className="mt-5">
-        <h3 className="text-center mb-4">Your Gold Loan Applications</h3>
+        <h3 className="text-center mb-4">Your Loan Applications</h3>
 
         {loading ? (
           <div className="text-center">
