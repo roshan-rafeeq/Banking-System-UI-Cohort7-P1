@@ -1,8 +1,76 @@
+<<<<<<< HEAD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
+// import AppNavbar from '../../../components/Navbar';
+=======
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Form, Button, Row, Col, Alert, Spinner } from 'react-bootstrap';
 import AuthContext from '../../../context/AuthContext';
 import { applyGoldLoan } from '../../../services/loanService';
 import { getCustomerDetails } from '../../../services/customerService';
+>>>>>>> 3a072be61f6457c705fab7929d8dc5bb363b69fa
 
 const GoldLoanApply = () => {
   const { customerId } = useContext(AuthContext);
@@ -10,6 +78,8 @@ const GoldLoanApply = () => {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  console.log("Customer id inside Goldloanapply: ",customerId);
+  
   const [formData, setFormData] = useState({
     customerId: '',
     customerName: '',
@@ -22,7 +92,7 @@ const GoldLoanApply = () => {
     tenure: 12,          // Dummy in months
     emi: 0,
     type: 'Gold Loan',
-    status: 'Pending',
+    status: 'Approved',
   });
 
   // Fetch & prefill data
