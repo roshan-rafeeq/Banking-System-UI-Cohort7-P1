@@ -21,10 +21,8 @@ const GoldLoanApply = () => {
     goldGrams: '',
     loanAmount: '',
     interestRate: 7.5,   // Dummy rate
-    tenure: 12,          // Dummy in months
-    emi: 0,
+    tenure: 12,
     type: 'Gold Loan',
-    status: 'Approved',
   });
 
   // Fetch & prefill data

@@ -1,4 +1,6 @@
 // src/services/loanService.js
+import AuthProvider from "../context/AuthProvider";
+
 const BASE_URL = 'https://tidy-gibbon-typically.ngrok-free.app/loans';
 
 export const applyGoldLoan = async (data) => {

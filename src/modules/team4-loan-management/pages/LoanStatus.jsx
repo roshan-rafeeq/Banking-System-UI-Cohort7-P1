@@ -8,31 +8,6 @@ const LoanStatus = () => {
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Dummy data for now
-  // const dummyLoans = [
-  //   {
-  //     id: 'L001',
-  //     type: 'Gold Loan',
-  //     name: 'Roshan Rafeeque',
-  //     amount: 50000,
-  //     status: 'Approved',
-  //   },
-  //   {
-  //     id: 'L002',
-  //     type: 'Personal Loan',
-  //     name: 'Roshan Rafeeque',
-  //     amount: 80000,
-  //     status: 'Pending',
-  //   },
-  // ];
-
-  // useEffect(() => {
-  //   // Later replace with fetchAllLoans()
-  //   setTimeout(() => {
-  //     setLoans(dummyLoans);
-  //     setLoading(false);
-  //   }, 1000);
-  // }, []);
 
   useEffect(() => {
     // Fetch data from the API
