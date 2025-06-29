@@ -19,7 +19,7 @@ const GoldLoanApply = () => {
     customerADHAAR: '',
     customerAddress: '',
     goldGrams: '',
-    loanAmount: '',
+    amount: '',
     interestRate: '7.5',   // Dummy rate
     tenure: 12,
     type: 'Gold Loan',
@@ -58,7 +58,7 @@ const GoldLoanApply = () => {
     if (name === 'goldGrams') {
       const ratePerGram = 8000;
       const amount = value * ratePerGram;
-      updated.loanAmount = amount;
+      updated.amount = amount;
       // Calculate dummy EMI (Simple Interest for now)
       const interest = (amount * updated.interestRate * updated.tenure) / (100 * 12);
       updated.emi = ((amount + interest) / updated.tenure).toFixed(2);
@@ -70,8 +70,22 @@ const GoldLoanApply = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await applyGoldLoan(formData);
-      // if (!res.ok) throw new Error('Failed to submit loan');
+      console.log(formData);
+      const cleanData = {
+        customerId: formData.customerId,
+        customerName: formData.customerName,
+        customerPAN: formData.customerPAN,
+        customerADHAAR: formData.customerADHAAR,
+        customerAddress: formData.customerAddress,
+        amount: parseFloat(formData.amount),
+        goldGrams: parseFloat(formData.goldGrams),
+        interestRate: parseFloat(formData.interestRate),
+        tenure: parseInt(formData.tenure),
+        type: formData.type
+      }
+      console.log("clean", cleanData);
+      const res = await applyGoldLoan(cleanData);
+      if (!res.ok) throw new Error('Failed to submit loan');
       setSubmitted(true);
     } catch (err) {
       setError('Something went wrong while applying for loan.');
@@ -130,7 +144,7 @@ const GoldLoanApply = () => {
           <Col md={6}>
             <Form.Group className="mb-3">
               <Form.Label>Loan Amount</Form.Label>
-              <Form.Control type="text" name="loanAmount" value={formData.loanAmount} readOnly />
+              <Form.Control type="text" name="amount" value={formData.amount} readOnly />
             </Form.Group>
           </Col>
         </Row>
