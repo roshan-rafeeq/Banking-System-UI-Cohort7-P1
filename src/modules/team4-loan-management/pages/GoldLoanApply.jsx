@@ -70,7 +70,6 @@ const GoldLoanApply = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       const cleanData = {
         customerId: formData.customerId,
         customerName: formData.customerName,
@@ -83,7 +82,6 @@ const GoldLoanApply = () => {
         tenure: parseInt(formData.tenure),
         type: formData.type
       }
-      console.log("clean", cleanData);
       const res = await applyGoldLoan(cleanData);
       if (!res.ok) throw new Error('Failed to submit loan');
       setSubmitted(true);

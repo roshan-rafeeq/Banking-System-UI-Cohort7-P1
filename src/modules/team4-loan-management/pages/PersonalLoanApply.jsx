@@ -16,7 +16,7 @@ const PersonalLoanApply = () => {
     address: '',
     occupation: '',
     salary: '',
-    loanAmount: '',
+    loanAmount: '', 
     tenure: '',
     purpose: '',
   });
@@ -55,21 +55,20 @@ const PersonalLoanApply = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await applyPersonalLoan({
-        customerId: customerId,
-        customerName: formData.fullName,
-        customerPhone: formData.mobile,
-        customerPAN: formData.pan,
-        customerADHAAR: formData.aadhaar,
-        customerAddress: formData.address,
-        occupation: formData.occupation,
-        salary: parseFloat(formData.salary),
-        loanAmount: parseFloat(formData.loanAmount),
-        tenure: parseInt(formData.tenure),
-        purpose: formData.purpose,
-        status: 'Pending',
-      });
-
+      const cleanData = {
+              customerId: formData.customerId,
+              customerName: formData.customerName,
+              customerPAN: formData.customerPAN,
+              customerADHAAR: formData.customerADHAAR,
+              customerAddress: formData.customerAddress,
+              amount: parseFloat(formData.amount),
+              goldGrams: parseFloat(formData.goldGrams),
+              interestRate: parseFloat(formData.interestRate),
+              tenure: parseInt(formData.tenure),
+              type: formData.type
+            }
+      const res = await applyPersonalLoan(cleanData);
+      if (!res.ok) throw new Error('Failed to submit loan');
       setSubmitted(true);
       setTimeout(() => {
         setFormData((prev) => ({

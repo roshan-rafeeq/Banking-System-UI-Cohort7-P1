@@ -68,7 +68,20 @@ const HomeLoanApply = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await applyPropertyLoan(formData);
+      const cleanData = {
+              customerId: formData.customerId,
+              customerName: formData.customerName,
+              customerPAN: formData.customerPAN,
+              customerADHAAR: formData.customerADHAAR,
+              customerAddress: formData.customerAddress,
+              amount: parseFloat(formData.amount),
+              goldGrams: parseFloat(formData.goldGrams),
+              interestRate: parseFloat(formData.interestRate),
+              tenure: parseInt(formData.tenure),
+              type: formData.type
+            }
+      const res = await applyPropertyLoan(cleanData);
+      if (!res.ok) throw new Error('Failed to submit loan');
       setSubmitted(true);
     } catch (err) {
       console.error('Failed to apply for loan:', err);
